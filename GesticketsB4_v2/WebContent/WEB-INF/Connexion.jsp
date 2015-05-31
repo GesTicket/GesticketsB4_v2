@@ -1,4 +1,3 @@
-<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 
@@ -9,15 +8,15 @@
 </head>
 
 <body>
-    <!-- la page est affichÃ©e en retour de GET /connexion ainsi qu'en retour de POST /connexion -->
+    <!-- la page est affichée en retour de GET /connexion ainsi qu'en retour de POST /connexion -->
 
     <form method="post" action="connexion">
 
-     <!-- si un bean identifiÃ© par 'utilisateur' existe, la valeur de chacun de ses attributs -->
-     <!-- est affichÃ©e dans les diffÃ©rents champs de saisie de la page -->
-     <!-- chaque champ est suivi d'une zone d'affichage : erreur de saisie Ã©ventuelle -->
+     <!-- si un bean identifié par 'utilisateur' existe, la valeur de chacun de ses attributs -->
+     <!-- est affichée dans les différents champs de saisie de la page -->
+     <!-- chaque champ est suivi d'une zone d'affichage : erreur de saisie éventuelle -->
      <!-- les messages d'erreur sont extraits de la MAP 'erreurs' du bean 'verifUser' -->
-     <!-- le rÃ©sultat du traitement (succÃ¨s ou Ã©chec) est extrait de l'attribut 'resultat' -->
+     <!-- le résultat du traitement (succès ou échec) est extrait de l'attribut 'resultat' -->
     
         <fieldset>
             <legend>Connexion</legend>

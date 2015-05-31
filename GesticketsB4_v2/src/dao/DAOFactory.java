@@ -25,6 +25,8 @@ public class DAOFactory {
 	// instance unique de l'objet DAO de la table Utilisateur de la base (singleton)
 	private UtilisateurDao utilisateurDAO;
 	
+	private TicketDao ticketDao;
+	
 	// constructeur privé de la fabrique => la fabrique respecte une part du Design Pattern Singleton
 	private DAOFactory( String url, String userName, String password ) {
 		this.url = url;
@@ -99,6 +101,14 @@ public class DAOFactory {
 			utilisateurDAO = new UtilisateurDaoImpl( this);
 		}
 		return utilisateurDAO;
+	}
+	
+	public TicketDao getTicketDao() {
+		if (ticketDao == null ) {
+			System.out.println("instanciation du DAO table Ticket");
+			ticketDao = new TicketDaoImpl (this);
+		}
+		return ticketDao;
 	}
 	
 	// méthodes fournissant une instance de DAO pour les autres tables

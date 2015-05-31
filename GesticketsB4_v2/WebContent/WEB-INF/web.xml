@@ -32,6 +32,22 @@
     <url-pattern>/inscription</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>Consulter</servlet-name>
+    <servlet-class>servlets.Consulter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Consulter</servlet-name>
+    <url-pattern>/consulter</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Ajouter</servlet-name>
+    <servlet-class>servlets.Ajouter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Ajouter</servlet-name>
+    <url-pattern>/ajouter</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>Deconnexion</servlet-name>
     <servlet-class>servlets.Deconnexion</servlet-class>
   </servlet>

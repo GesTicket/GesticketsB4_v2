@@ -1,4 +1,3 @@
-<%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +6,19 @@
     <link type="text/css" rel="stylesheet" href="inc/style.css" />
 </head>
 <body>
-<%-- VÃ©rification de la prÃ©sence d'un objet connectÃ© en session --%>
+<%-- Vérification de la présence d'un objet connecté en session --%>
 <c:choose>
 <c:when test="${ !empty sessionScope.sessionUtilisateur }">
-<p class="succes">Vous Ãªtes connectÃ©(e) avec l'email : ${ sessionScope.sessionUtilisateur.email }</p>
+<p class="succes">Vous êtes connecté(e) avec l'email : ${ sessionScope.sessionUtilisateur.email }</p>
 <p class="succes">et le mot de passe : ${ sessionScope.sessionUtilisateur.motDePasse }</p>
 <br />
 <p><a href="<c:url value="/inscription"/>">inscrire un utilisateur</a></p>
 <br />
-<p><a href="<c:url value="/deconnexion"/>">se dÃ©connecter</a></p>
+<p><a href="<c:url value="/ajouter"/>">ajouter un ticket</a></p>
+<br />
+<p><a href="<c:url value="/consulter"/>">consulter un ticket</a></p>
+<br />
+<p><a href="<c:url value="/deconnexion"/>">se déconnecter</a></p>
 </c:when>
 <c:otherwise>
 <p><a href="<c:url value="/connexion"/>">se connecter</a></p>
