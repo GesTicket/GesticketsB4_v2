@@ -34,14 +34,14 @@ public class InscriptionForm {
 	// MAP (champ, message) des erreurs de saisie détectées en validant les saisies
 	private Map<String, String> erreurs = new HashMap<String, String>();
 
+ 	public Map<String, String> getErreurs() {
+		return erreurs;
+	}
+
 	public String getResultat() {
 		return resultat;
 	}
 
- 	public Map<String, String> getErreurs() {
-		return erreurs;
-	}
-	
 	public InscriptionForm( DAOFactory daoFactory) {
 		// récupération de l'objet DAO à partir de la fabrique donnée au constructeur
 		utilisateurDao = daoFactory.getUtilisateurDao();
@@ -105,19 +105,19 @@ public class InscriptionForm {
 			String regExp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)";
 			if ( email.matches( regExp ) ) { // adresse mail OK
 				utilisateur.setEmail( email ); // enregistrement dans le bean Utilisateur
-				//if ( utilisateurDao.trouver( email ) == null ) { // adresse inconnue en table
-				//	System.out.println( "   ...enregistrement @-mail nouvel user" );
-				//} else { // adresse déjà existante
-				//	erreurs.put( "email", "Cette adresse mail est déjà utilisée, en choisir une autre." );
-				//	System.out.println( "   ...adresse mail déjà utlisée" );
-				//}
+				if ( utilisateurDao.trouver( email ) == null ) { // adresse inconnue en table
+					System.out.println( "enregistrement @-mail nouvel user" );
+				} else { // adresse déjà existante
+					erreurs.put( "email", "Cette adresse mail est déjà utilisée, en choisir une autre." );
+					System.out.println( "adresse mail déjà utlisée" );
+				}
 		    } else { // adresse mail mal formée
 		    	erreurs.put( "email", "Saisir une adresse mail valide" );
-		    	System.out.println( "   ...adresse mail mal formée" );
+		    	System.out.println( "adresse mail mal formée" );
 		    }
 		} else { // paramètre obligatoire mais vide 
 		    erreurs.put( "email", "Saisir une adresse mail." );
-		    System.out.println( "   ...adresse mail vide" );
+		    System.out.println( "adresse mail vide" );
 		}
 	}
 
@@ -134,28 +134,28 @@ public class InscriptionForm {
 				passwordEncryptor.setPlainDigest(false);
 				String motDePasseChiffre = passwordEncryptor.encryptPassword( motdepasse );
 				utilisateur.setMotDePasse( motDePasseChiffre );
-				System.out.println( "   ... MDP chiffré : " + motDePasseChiffre );
+				System.out.println( "MDP chiffré : " + motDePasseChiffre );
 			} else { // mdp trop court
 				erreurs.put( "motdepasse", "Le mdp doit avoir au moins 3 caractères." );
-				System.out.println( "   ...MDP trop court" );
+				System.out.println( "MDP trop court" );
 			}
 		   } else { // pas confirmé
 				erreurs.put( "confirmation", "Le mot de passe et la confirmation doivent être identiques." );
-				System.out.println( "   ...Confirmation différente de MDP" );
+				System.out.println( "Confirmation différente de MDP" );
 		   }
 	   } else { // mdp non fourni
 		   erreurs.put( "motdepasse", "Le mdp et sa confirmation sont obligatoires." );
-		   System.out.println( "   ... MDP non fourni" );
+		   System.out.println( "MDP non fourni" );
 	   }
 	}
 
 	private void validerNomUser( String nom ) {
 		if ( nom != null && nom.length() >=3 ) { // paramètre non vide et au moins 3 car
 			utilisateur.setNom( nom );
-			System.out.println( "   ... Nom User OK" );
+			System.out.println( "Nom User OK" );
 		} else {
 			erreurs.put( "nom", "Le nom d'utlisateur doit avoir au moins 3 caractères." );
-			System.out.println( "   ...Nom User trop court" );
+			System.out.println( "Nom User trop court" );
 		}
 	}
 

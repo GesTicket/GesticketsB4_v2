@@ -37,5 +37,8 @@
         </fieldset>
         
     </form>
+    
+    <p><a href="<c:url value="/index.jsp"/>">accueil</a></p>
+
 </body>
 </html>

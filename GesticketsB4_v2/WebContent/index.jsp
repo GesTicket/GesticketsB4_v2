@@ -14,6 +14,8 @@
 <br />
 <p><a href="<c:url value="/inscription"/>">inscrire un utilisateur</a></p>
 <br />
+<p><a href="<c:url value="/liste"/>">lister les utilisateurs</a></p>
+<br />
 <p><a href="<c:url value="/ajouter"/>">ajouter un ticket</a></p>
 <br />
 <p><a href="<c:url value="/consulter"/>">consulter un ticket</a></p>

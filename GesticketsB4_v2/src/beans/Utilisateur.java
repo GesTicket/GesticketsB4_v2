@@ -43,4 +43,17 @@ public class Utilisateur {
     public void setDateInscription( Timestamp dateInscription ) {
         this.dateInscription = dateInscription;
     }
+    
+    // constructeur par défaut
+    public Utilisateur() {
+    
+    }
+    
+    // constructeur avec initialisation des champs de l'utilisateur
+    public Utilisateur( int id, String email, String nom ) {
+    	setId((long) id);
+    	setEmail(email);
+    	setNom(nom);
+    }
+    
 }

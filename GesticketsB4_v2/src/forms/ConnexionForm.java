@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import dao.DAOException;
+//import dao.DAOFactory;
 import dao.UtilisateurDao;
 import beans.Utilisateur;
 
@@ -38,6 +39,11 @@ public final class ConnexionForm {
         return resultat;
     }
 
+	//public ConnexionForm( DAOFactory daoFactory) {
+		// récupération de l'objet DAO à partir de la fabrique donnée au constructeur
+	//	utilisateurDao = daoFactory.getUtilisateurDao();
+	//}
+
     public Utilisateur connecterUtilisateur( HttpServletRequest request ) {
 
     	utilisateur = new Utilisateur();
@@ -48,20 +54,12 @@ public final class ConnexionForm {
 
 		try { // l'accès en BD peut générer des erreurs SQL
 			if ( erreurs.isEmpty() ) {
-			//utilisateurDao.trouver( CHAMP_EMAIL ); // dans la base, via le DAO
 				resultat = "Succès de la recherche.";
-				// ici test de mot de passe
-				String pass_comparaison = "admin";
-				if ( getValeurChamp( request, CHAMP_PASS ).equals(pass_comparaison) ) {
-					resultat = "mot de passe correct '" + getValeurChamp( request, CHAMP_PASS ) + "' = '" + pass_comparaison + "'";
-				} else {
-					resultat = "mot de passe érroné '" + getValeurChamp( request, CHAMP_PASS ) + "' <> '" + pass_comparaison + "'";
-				}
 			} else {
 				resultat = "Echec de la recherche.";
 			}
 		} catch (DAOException e) {
-			resultat = "Echec de la recherche, une erreur est survenue, réessayer";
+			resultat = "Echec de la connexion, une erreur est survenue, réessayer";
 			// si la MAP des erreurs est vide, on enregistre l'erreur DAO pour
 			// différencier la couleur d'affichage dans la JSP de retour
 			if ( erreurs.isEmpty() ) {
@@ -105,13 +103,19 @@ public final class ConnexionForm {
 			String regExp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)";
 			if ( email.matches( regExp ) ) { // adresse mail OK
 				utilisateur.setEmail( email ); // enregistrement dans le bean Utilisateur
-		    } else { // adresse mail mal formée
+				//if ( utilisateurDao.trouver( email ) == null ) { // adresse inconnue en table
+				//	erreurs.put( "email", "Cette adresse mail est inconnue, en choisir une autre." );
+				//	System.out.println( "adresse inconnue" );
+				//} else { // adresse existante
+				//	System.out.println( "connexion user @-mail" );
+				//}	
+			} else { // adresse mail mal formée
 		    	erreurs.put( "email", "Saisir une adresse mail valide" );
-		    	System.out.println( "   ...adresse mail mal formée" );
+		    	System.out.println( "adresse mail mal formée" );
 		    }
 		} else { // paramètre obligatoire mais vide 
 		    erreurs.put( "email", "Saisir une adresse mail." );
-		    System.out.println( "   ...adresse mail vide" );
+		    System.out.println( "adresse mail vide" );
 		}
 	}
 
@@ -127,14 +131,22 @@ public final class ConnexionForm {
 				passwordEncryptor.setPlainDigest(false);
 				String motDePasseChiffre = passwordEncryptor.encryptPassword( motdepasse );
 				utilisateur.setMotDePasse( motDePasseChiffre );
-				System.out.println("   ... MDP chiffré : " + motDePasseChiffre );
+				System.out.println("MDP chiffré : " + motDePasseChiffre );
+				// ici test de mot de passe
+				String pass_comparaison = "admin";
+				if ( motdepasse.equals(pass_comparaison) ) {
+					System.out.println( "MDP correct" );
+				} else {
+					erreurs.put( "motdepasse", "Le mot de passe est érroné." );
+					System.out.println( "MDP érroné" );
+				}
 			} else { // mdp trop court
-				erreurs.put( "motdepasse", "Le mdp doit avoir au moins 3 caractères." );
-				System.out.println( "   ...MDP trop court" );
+				erreurs.put( "motdepasse", "Le mot de passe doit avoir au moins 3 caractères." );
+				System.out.println( "MDP trop court" );
 			}
 	   } else { // mdp non fourni
-		   erreurs.put( "motdepasse", "Le mdp est obligatoire." );
-		   System.out.println( "   ... MDP non fourni" );
+		   erreurs.put( "motdepasse", "Le mot de passe est obligatoire." );
+		   System.out.println( "MDP non fourni" );
 	   }
 	}
 

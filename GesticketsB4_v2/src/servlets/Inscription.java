@@ -13,15 +13,16 @@ import beans.Utilisateur;
 
 public class Inscription extends HttpServlet {
 	
-	private static final String FORM_INSCRIPTION = "/WEB-INF/Inscription.jsp";
-	private static final String ATT_FORM = "form";
-	private static final String ATT_USER = "utilisateur";
+	private static final String VUE_CREER_UTIL     = "/WEB-INF/Inscription.jsp";
+	private static final String VUE_AFFICH_UTIL    = "/WEB-INF/afficherUtilisateur.jsp";
+	private static final String ATT_FORM           = "form";
+	private static final String ATT_USER           = "utilisateur";
 	// identifiant de l'attribut de scope Application donnant la référence de la fabrique de DAOs
 	private static final String ATT_DAO_FACTORY_ID = "daoFactory";
 
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher( FORM_INSCRIPTION ).forward( request, response );
+		getServletContext().getRequestDispatcher( VUE_CREER_UTIL ).forward( request, response );
 	}
 
 	@Override
@@ -41,7 +42,13 @@ public class Inscription extends HttpServlet {
 		request.setAttribute( ATT_FORM, form );
 		request.setAttribute( ATT_USER, utilisateur );
 		
-		// affichage du résultat par la JSP
-		getServletContext().getRequestDispatcher( FORM_INSCRIPTION ).forward( request, response );
+        // aiguillage
+        if ( form.getErreurs().isEmpty()) { // pas d'erreur : affichage de l'utilisateur
+        	// affichage de la fiche récapitulative du nouvel utilisateur enregistré
+        	getServletContext().getRequestDispatcher( VUE_AFFICH_UTIL ).forward( request, response);
+        } else { // erreurs : réaffichage du formulaire avec les erreurs
+    	getServletContext().getRequestDispatcher( VUE_CREER_UTIL ).forward( request, response );
+        }
+
 	}
 }

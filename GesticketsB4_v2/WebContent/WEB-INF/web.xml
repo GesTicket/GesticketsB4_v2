@@ -24,12 +24,28 @@
     <url-pattern>/connexion</url-pattern>
   </servlet-mapping>
     <servlet>
+    <servlet-name>Deconnexion</servlet-name>
+    <servlet-class>servlets.Deconnexion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Deconnexion</servlet-name>
+    <url-pattern>/deconnexion</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>Inscription</servlet-name>
     <servlet-class>servlets.Inscription</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Inscription</servlet-name>
     <url-pattern>/inscription</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>Liste</servlet-name>
+    <servlet-class>servlets.ListeUtilisateurs</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Liste</servlet-name>
+    <url-pattern>/liste</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Consulter</servlet-name>
@@ -46,14 +62,6 @@
   <servlet-mapping>
     <servlet-name>Ajouter</servlet-name>
     <url-pattern>/ajouter</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>Deconnexion</servlet-name>
-    <servlet-class>servlets.Deconnexion</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Deconnexion</servlet-name>
-    <url-pattern>/deconnexion</url-pattern>
   </servlet-mapping>
   <listener>
     <listener-class>dao.InitialisationDaoFactory</listener-class>
