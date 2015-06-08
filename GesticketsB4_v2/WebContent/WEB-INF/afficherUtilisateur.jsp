@@ -15,9 +15,12 @@
          <div id="corps">
             <p class="info">${ form.resultat }</p>
             <p>id : <c:out value="${ utilisateur.id }"/></p>
-            <p>Email : <c:out value="${ utilisateur.email }"/></p>
-            <p>Mot de passe : <c:out value="${ utilisateur.motDePasse }"/></p>
             <p>Nom : <c:out value="${ utilisateur.nom }"/></p>
+            <p>Prénom : <c:out value="${ utilisateur.prenom }"/></p>
+            <p>Email : <c:out value="${ utilisateur.email }"/></p>
+            <p>Login: <c:out value="${ utilisateur.login }"/></p>
+            <p>Mot de passe : <c:out value="${ utilisateur.motDePasse }"/></p>
+            <p>Profil : <c:out value="${ utilisateur.profil }"/></p>
             <p>Date d'inscription : <c:out value="${ utilisateur.dateInscription }"/></p>
         </div>
         <p><a href="<c:url value="/index.jsp"/>">accueil</a></p>

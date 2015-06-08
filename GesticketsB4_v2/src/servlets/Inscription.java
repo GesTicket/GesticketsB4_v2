@@ -11,6 +11,7 @@ import dao.DAOFactory;
 import forms.InscriptionForm;
 import beans.Utilisateur;
 
+@SuppressWarnings("serial")
 public class Inscription extends HttpServlet {
 	
 	private static final String VUE_CREER_UTIL     = "/WEB-INF/Inscription.jsp";

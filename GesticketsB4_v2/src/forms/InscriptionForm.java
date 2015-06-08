@@ -17,11 +17,14 @@ public class InscriptionForm {
 	
 	private final static String ALGO_CHIFFREMENT = "SHA-256";
 	
+    private static final String CHAMP_NOM    = "nom";
+    private static final String CHAMP_PRENOM = "prenom";
     private static final String CHAMP_EMAIL  = "email";
+    private static final String CHAMP_LOGIN  = "login";
     private static final String CHAMP_PASS   = "motdepasse";
     private static final String CHAMP_CONF   = "confirmation";
-    private static final String CHAMP_NOM    = "nom";
-	
+    private static final String CHAMP_PROFIL = "profil";
+
     // le bean qui va être créé si tout est correct
     private Utilisateur utilisateur;
     
@@ -52,9 +55,12 @@ public class InscriptionForm {
 		utilisateur = new Utilisateur();
 		
 		// récupération et validation des champs de saisie, maj du bean Utilisateur		
+		validerNom( getValeurChamp( request, CHAMP_NOM ) );
+		validerPrenom( getValeurChamp( request, CHAMP_PRENOM ) );
 		validerEmail( getValeurChamp( request, CHAMP_EMAIL ) );
+		validerLogin( getValeurChamp (request, CHAMP_LOGIN ) );
 		validerMotDePasse( getValeurChamp( request, CHAMP_PASS ), getValeurChamp( request, CHAMP_CONF ) );
-		validerNomUser( getValeurChamp( request, CHAMP_NOM ) );
+		validerProfil( getValeurChamp (request, CHAMP_PROFIL ) );
 		
 		try { // l'accès en BD peut générer des erreurs SQL
 			if ( erreurs.isEmpty() ) {
@@ -76,6 +82,22 @@ public class InscriptionForm {
 		return utilisateur;
 	}
 
+	private void validerNom( String nom ) {
+		if ( nom != null && nom.length() >=3 ) { // paramètre non vide et au moins 3 car
+			utilisateur.setNom( nom );
+			System.out.println( "Nom User OK" );
+		} else {
+			erreurs.put( "nom", "Le nom d'utlisateur doit avoir au moins 3 caractères." );
+			System.out.println( "Nom User trop court" );
+		}
+	}
+	
+	private void validerPrenom( String prenom ) {
+		if ( prenom != null ) { // paramètre non vide
+			utilisateur.setPrenom( prenom );
+			System.out.println( "Prénom User OK" );
+		}
+	}
 	private void validerEmail( String email) {
 		if ( email != null) { // paramètre non vide
 
@@ -105,7 +127,7 @@ public class InscriptionForm {
 			String regExp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)";
 			if ( email.matches( regExp ) ) { // adresse mail OK
 				utilisateur.setEmail( email ); // enregistrement dans le bean Utilisateur
-				if ( utilisateurDao.trouver( email ) == null ) { // adresse inconnue en table
+				if ( utilisateurDao.trouverEmail( email ) == null ) { // adresse inconnue en table
 					System.out.println( "enregistrement @-mail nouvel user" );
 				} else { // adresse déjà existante
 					erreurs.put( "email", "Cette adresse mail est déjà utilisée, en choisir une autre." );
@@ -121,6 +143,22 @@ public class InscriptionForm {
 		}
 	}
 
+	private void validerLogin( String login ) {
+		if ( login != null && login.length() >=3 ) { // paramètre non vide et au moins 3 car
+			utilisateur.setLogin( login );
+			if ( utilisateurDao.trouverLogin( login ) == null ) { // login inconnu en table
+				System.out.println( "enregistrement @-mail nouvel user" );
+			} else { // login déjà existant
+				erreurs.put( "login", "Ce login est déjà utilisé, en choisir un autre." );
+				System.out.println( "login déjà utlisé" );
+			}
+			System.out.println( "Login OK" );
+		} else {
+			erreurs.put( "login", "Le login doit avoir au moins 3 caractères." );
+			System.out.println( "Login trop court" );
+		}
+	}
+	
 	private void validerMotDePasse( String motdepasse, String confirmation ) {
 	   if ( motdepasse != null && confirmation != null ) { // paramètres non vides
 		   utilisateur.setMotDePasse( confirmation );
@@ -149,13 +187,13 @@ public class InscriptionForm {
 	   }
 	}
 
-	private void validerNomUser( String nom ) {
-		if ( nom != null && nom.length() >=3 ) { // paramètre non vide et au moins 3 car
-			utilisateur.setNom( nom );
-			System.out.println( "Nom User OK" );
+	private void validerProfil( String profil ) {
+		if ( profil != null ) { // paramètre non vide
+			utilisateur.setProfil( profil );
+			System.out.println( "Profil OK" );
 		} else {
-			erreurs.put( "nom", "Le nom d'utlisateur doit avoir au moins 3 caractères." );
-			System.out.println( "Nom User trop court" );
+			erreurs.put( "profil", "Le profil doit être renseigné." );
+			System.out.println( "Profil non fourni" );
 		}
 	}
 

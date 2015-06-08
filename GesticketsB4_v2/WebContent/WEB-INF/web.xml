@@ -23,7 +23,7 @@
     <servlet-name>Connexion</servlet-name>
     <url-pattern>/connexion</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>Deconnexion</servlet-name>
     <servlet-class>servlets.Deconnexion</servlet-class>
   </servlet>

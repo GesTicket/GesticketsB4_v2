@@ -8,6 +8,9 @@ public class Utilisateur {
     private String    motDePasse;
     private String    nom;
     private Timestamp dateInscription;
+    private String    prenom;
+    private String    profil;
+    private String    login;   
 
     public Long getId() {
         return id;
@@ -44,6 +47,27 @@ public class Utilisateur {
         this.dateInscription = dateInscription;
     }
     
+    public void setPrenom( String prenom ) {
+        this.prenom = prenom;
+    }
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setProfil( String profil ) {
+        this.profil = profil;
+    }
+    public String getProfil() {
+        return profil;
+    }
+
+    public void setLogin( String login ) {
+        this.login = login;
+    }
+    public String getLogin() {
+        return login;
+    }
+
     // constructeur par défaut
     public Utilisateur() {
     

@@ -16,12 +16,12 @@
             <legend>Ajout d'un ticket</legend>
             
             <label for="titre">titre</label>
-            <input type="titre" id="titre" name="titre" 
+            <input type="text" id="titre" name="titre" 
                     value="<c:out value="${ ticket.titre }"/>" size="20" maxlength="60" />
             		<span class="erreur">${ form.erreurs['titre'] }</span>
             <br />
             <label for="description">description </label>
-            <input type="description" id="description" name="description" 
+            <input type="text" id="description" name="description" 
                     value="<c:out value="${ ticket.description }"/>" size="20" maxlength="20" />
             		<span class="erreur">${ form.erreurs['description'] }</span>
             

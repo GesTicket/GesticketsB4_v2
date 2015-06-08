@@ -9,13 +9,16 @@
 <%-- Vérification de la présence d'un objet connecté en session --%>
 <c:choose>
 <c:when test="${ !empty sessionScope.sessionUtilisateur }">
-<p class="succes">Vous êtes connecté(e) avec l'email : ${ sessionScope.sessionUtilisateur.email }</p>
-<p class="succes">et le mot de passe : ${ sessionScope.sessionUtilisateur.motDePasse }</p>
+<p class="succes">Bonjour ${ sessionScope.sessionUtilisateur.nom } ${ sessionScope.sessionUtilisateur.prenom }</p>
 <br />
-<p><a href="<c:url value="/inscription"/>">inscrire un utilisateur</a></p>
-<br />
-<p><a href="<c:url value="/liste"/>">lister les utilisateurs</a></p>
-<br />
+<c:set var="profil" value="administrateur"/>
+<c:if test="${sessionScope.sessionUtilisateur.profil == profil}">
+	<%-- fonctions accessibles uniquement au profil administrateur --%>
+	<p><a href="<c:url value="/inscription"/>">inscrire un utilisateur</a></p>
+	<br />
+	<p><a href="<c:url value="/liste"/>">lister les utilisateurs</a></p>
+	<br />
+</c:if>
 <p><a href="<c:url value="/ajouter"/>">ajouter un ticket</a></p>
 <br />
 <p><a href="<c:url value="/consulter"/>">consulter un ticket</a></p>
