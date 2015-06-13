@@ -10,9 +10,10 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 import dao.DAOException;
 import dao.DAOFactory;
 import dao.UtilisateurDao;
+
 import beans.Utilisateur;
 
-public class InscriptionForm {
+public class CreationUtilisateurForm {
 	// classe métier qui traite les saisies du formulaire d'inscription
 	
 	private final static String ALGO_CHIFFREMENT = "SHA-256";
@@ -45,12 +46,12 @@ public class InscriptionForm {
 		return resultat;
 	}
 
-	public InscriptionForm( DAOFactory daoFactory) {
+	public CreationUtilisateurForm( UtilisateurDao utilisateurDao ) {
 		// récupération de l'objet DAO à partir de la fabrique donnée au constructeur
-		utilisateurDao = daoFactory.getUtilisateurDao();
+		this.utilisateurDao = utilisateurDao;
 	}
 
-	public Utilisateur inscrireUtilisateur( HttpServletRequest request ) {
+	public Utilisateur creerUtilisateur( HttpServletRequest request ) {
 				
 		utilisateur = new Utilisateur();
 		

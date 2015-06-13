@@ -32,20 +32,36 @@
     <url-pattern>/deconnexion</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>CreationUtilisateur</servlet-name>
+    <servlet-class>servlets.CreationUtilisateur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreationUtilisateur</servlet-name>
+    <url-pattern>/creationUtilisateur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ListeUtilisateurs</servlet-name>
+    <servlet-class>servlets.ListeUtilisateurs</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListeUtilisateurs</servlet-name>
+    <url-pattern>/listeUtilisateurs</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SuppressionUtilisateur</servlet-name>
+    <servlet-class>servlets.SuppressionUtilisateur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SuppressionUtilisateur</servlet-name>
+    <url-pattern>/suppressionUtilisateur</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>Inscription</servlet-name>
     <servlet-class>servlets.Inscription</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Inscription</servlet-name>
     <url-pattern>/inscription</url-pattern>
-  </servlet-mapping>
-    <servlet>
-    <servlet-name>Liste</servlet-name>
-    <servlet-class>servlets.ListeUtilisateurs</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Liste</servlet-name>
-    <url-pattern>/liste</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Consulter</servlet-name>
@@ -63,7 +79,15 @@
     <servlet-name>Ajouter</servlet-name>
     <url-pattern>/ajouter</url-pattern>
   </servlet-mapping>
+  <filter>
+  	<filter-name>PrechargementFilter</filter-name>
+  	<filter-class>filters.PrechargementFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>PrechargementFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   <listener>
     <listener-class>dao.InitialisationDaoFactory</listener-class>
-</listener>
+  </listener>
 </web-app>

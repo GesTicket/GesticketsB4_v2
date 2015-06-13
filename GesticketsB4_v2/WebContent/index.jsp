@@ -14,9 +14,9 @@
 <c:set var="profil" value="administrateur"/>
 <c:if test="${sessionScope.sessionUtilisateur.profil == profil}">
 	<%-- fonctions accessibles uniquement au profil administrateur --%>
-	<p><a href="<c:url value="/inscription"/>">inscrire un utilisateur</a></p>
+	<p><a href="<c:url value="/creationUtilisateur"/>">créer un utilisateur</a></p>
 	<br />
-	<p><a href="<c:url value="/liste"/>">lister les utilisateurs</a></p>
+	<p><a href="<c:url value="/listeUtilisateurs"/>">lister les utilisateurs</a></p>
 	<br />
 </c:if>
 <p><a href="<c:url value="/ajouter"/>">ajouter un ticket</a></p>

@@ -24,8 +24,8 @@ public class ListeUtilisateurs extends HttpServlet {
 		
 		// accès aux attributs de scope session
 		HttpSession session = request.getSession();
-		Map<String, Utilisateur> utilisateurs = (HashMap<String, Utilisateur>)
-				session.getAttribute( SESSION_UTILISATEURS );
+		@SuppressWarnings("unchecked")
+		Map<String, Utilisateur> utilisateurs = (HashMap<String, Utilisateur>) session.getAttribute( SESSION_UTILISATEURS );
 		
 		utilisateurs = new HashMap<String, Utilisateur>();
 		

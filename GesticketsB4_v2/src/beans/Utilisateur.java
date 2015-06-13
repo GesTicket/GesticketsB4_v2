@@ -1,8 +1,10 @@
 package beans;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Utilisateur {
+@SuppressWarnings("serial")
+public class Utilisateur implements Serializable {
     private Long      id;
     private String    email;
     private String    motDePasse;
@@ -74,10 +76,11 @@ public class Utilisateur {
     }
     
     // constructeur avec initialisation des champs de l'utilisateur
-    public Utilisateur( int id, String email, String nom ) {
-    	setId((long) id);
-    	setEmail(email);
-    	setNom(nom);
+    public Utilisateur( int id, String email, /*String motDePasse,*/ String nom ) {
+    	setId( (long) id );
+    	setEmail( email );
+    	//setMotDePasse( motDePasse );
+    	setNom( nom );
     }
     
 }
