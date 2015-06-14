@@ -18,18 +18,23 @@ import javax.servlet.http.HttpSession;
 import beans.Utilisateur;
 import dao.UtilisateurDao;
 import dao.DAOFactory;
+import dao.TicketDao;
+import beans.Ticket;
 
 public class PrechargementFilter implements Filter {
 	private static final String ATT_DAO_FACTORY_ID        = "daoFactory";
     public static final String ATT_SESSION_UTILISATEURS   = "utilisateurs";
+    public static final String ATT_SESSION_TICKETS = "tickets";
 
     private UtilisateurDao utilisateurDao;
-    // ticket
+
+    private TicketDao ticketDao;
 
     public void init( FilterConfig config ) throws ServletException {
         // Récupération d'une instance de notre DAO Utilisateur /* et du DAO Ticket
         this.utilisateurDao = ( (DAOFactory) config.getServletContext().getAttribute( ATT_DAO_FACTORY_ID ) ).getUtilisateurDao();
-        //ticket
+        
+        this.ticketDao = ((DAOFactory) config.getServletContext().getAttribute(ATT_DAO_FACTORY_ID) ).getTicketDao();
     }
 
     public void doFilter( ServletRequest req, ServletResponse res, FilterChain chain ) throws IOException,
@@ -57,7 +62,15 @@ public class PrechargementFilter implements Filter {
             session.setAttribute( ATT_SESSION_UTILISATEURS, mapUtilisateurs );
         }
 
+        if ( session.getAttribute( ATT_SESSION_TICKETS ) == null ) {
 
+            List<Ticket> listeTickets = ticketDao.listerTickets();
+            Map<Long, Ticket> mapTickets = new HashMap<Long, Ticket>();
+            for ( Ticket ticket : listeTickets ) {
+                mapTickets.put( ticket.getId(), ticket );
+            }
+            session.setAttribute( ATT_SESSION_TICKETS, mapTickets );
+        }
         /* Pour terminer, poursuite de la requête en cours */
         chain.doFilter( request, res );
     }

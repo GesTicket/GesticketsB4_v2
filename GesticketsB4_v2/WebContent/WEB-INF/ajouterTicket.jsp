@@ -10,7 +10,7 @@
 <body>
     <!-- la page est affichée en retour de GET /inscription ainsi qu'en retour de POST /inscription -->
 
-     <form  method="post" action="ajouter">
+     <form  method="post" action="ajouterTicket">
     
     	<fieldset>
             <legend>Ajout d'un ticket</legend>
@@ -22,7 +22,7 @@
             <br />
             <label for="description">description </label>
             <input type="text" id="description" name="description" 
-                    value="<c:out value="${ ticket.description }"/>" size="20" maxlength="20" />
+                    value="<c:out value="${ ticket.description }"/>" size="20" maxlength="200" />
             		<span class="erreur">${ form.erreurs['description'] }</span>
             
             <br />

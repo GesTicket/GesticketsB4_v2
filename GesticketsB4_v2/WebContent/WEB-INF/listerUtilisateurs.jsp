@@ -8,6 +8,7 @@
         <meta charset="utf-8" />
         <title>Liste des utilisateurs existants</title>
         <link type="text/css" rel="stylesheet" href="<c:url value="/inc/style.css"/>" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     </head>
 <body>
     <div id="corps">
@@ -18,7 +19,7 @@
         </c:when>
         <%-- sinon, génération d'une table des utilisateurs --%>
         <c:otherwise>
-        <table>
+        <table class="table">
             <tr>
                 <th>id</th>
                 <th>Email</th>
@@ -50,5 +51,6 @@
     </c:choose>
     </div>
     <p><a href="<c:url value="/index.jsp"/>">retour à l'accueil</a></p>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>

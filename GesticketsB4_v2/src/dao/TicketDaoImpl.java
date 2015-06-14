@@ -5,22 +5,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import beans.Ticket;
+import beans.Utilisateur;
 
 public class TicketDaoImpl implements TicketDao {
 
 	// requêtes SQL
+	private static final String SQL_SELECT = 
+			"SELECT * FROM Ticket";
+	
+	private static final String SQL_SELECT_PAR_ID = 
+			"SELECT id, titre, description, dateCreation FROM Ticket WHERE id = ?";
+	
 	private static final String SQL_SELECT_PAR_TITRE = 
-			"SELECT id, titre, description, dateCreation "
-	        + "FROM Ticket "
-			+ "WHERE titre = ?";
+			"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre = ?";
+	    
+	private static final String SQL_SELECT_PAR_DESCRIPTION =
+			"SELECT id, titre, description, dateCreation FROM Ticket WHERE description= ?";
+	
 	private static final String SQL_INSERT = 
-			"INSERT INTO Ticket "
-			+ "(titre, description, dateCreation) "
-			+ "VALUES (?, ?, NOW())";
-
-
+			"INSERT INTO Ticket (titre, description, dateCreation) VALUES (?, ?, NOW())";
+	
+	private static final String SQL_DELETE = 
+			"DELETE FROM Ticket WHERE id = ?";
+			
 	// référence de la fabrique de DAOs
 	private DAOFactory daoFactory;
 	
@@ -32,7 +43,7 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
 
-    public Ticket trouver( String titre ) throws DAOException {
+    public Ticket trouverTitre( String titre ) throws DAOException {
 
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -65,13 +76,14 @@ public class TicketDaoImpl implements TicketDao {
         return ticket;
         
     }
-
+    
+    
 
     /* Implémentation de la méthode creer() définie dans l'interface UtilisateurDao */
 
     @Override
 
-    public void creer( Ticket ticket ) throws IllegalArgumentException, DAOException {
+    public void creerTicket( Ticket ticket ) throws IllegalArgumentException, DAOException {
 
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -105,7 +117,31 @@ public class TicketDaoImpl implements TicketDao {
         }
         
     }
+    
+    private Ticket trouver( String sql, Object... objets ) throws DAOException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Ticket ticket = null;
 
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            
+            preparedStatement = initialisationRequetePreparee( connexion, sql, false, objets );
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données retournée dans le ResultSet */
+            if ( resultSet.next() ) {
+            	ticket = map( resultSet );
+            }
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+            fermetureRessourcesSQL( connexion, preparedStatement, resultSet );
+        }
+
+        return ticket;
+    }
     // Initialise la requête préparée basée sur la connexion passée en argument,
     //avec la requête SQL et les objets donnés.
     public static PreparedStatement initialisationRequetePreparee( Connection connexion, String sql, boolean returnGeneratedKeys, Object... objets ) throws SQLException {
@@ -152,6 +188,88 @@ public class TicketDaoImpl implements TicketDao {
 		} catch ( SQLException e ) {
 			System.out.println( "Echec du maintien de la Connection : "+ e.getMessage() );
 		}		
+	}
+	
+		
+	@Override
+	public Ticket trouverDescription(String description) throws DAOException {
+		
+		Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Ticket ticket = null;
+        
+        try {
+        	connexion = daoFactory.getConnection();
+        	preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_DESCRIPTION, false, description );
+			System.out.println( "initialisation requête 'trouverDescription()'" );
+			resultSet = preparedStatement.executeQuery();
+			System.out.println( "execution requête 'trouverDescription()'" );
+			if ( resultSet.next() ) { // positionnement sur la première entité obtenue
+				ticket = map( resultSet );
+			}
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+			fermetureRessourcesSQL( connexion, preparedStatement, resultSet );
+        }
+        return ticket;
+	}
+
+	@Override
+	public Ticket trouverTicket(long id) throws DAOException {
+		// TODO Auto-generated method stub
+		return trouver(SQL_SELECT_PAR_ID);
+	}
+	
+	@Override
+	public List<Ticket> listerTickets() throws DAOException {
+		
+		Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Ticket> tickets = new ArrayList<Ticket>();
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement( SQL_SELECT );
+            resultSet = preparedStatement.executeQuery();
+            while ( resultSet.next() ) {
+            	tickets.add( map( resultSet ) );
+            }
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+        	fermetureRessourcesSQL( connexion, preparedStatement, resultSet );
+        }
+        return tickets;
+	}
+	
+	public void supprimerTicket( Ticket ticket ) throws DAOException {
+
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+        	// récupération de la connexion à la base, via la fabrique
+            connexion = daoFactory.getConnection();
+            // préparation de la requête DELETE
+            preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE, true, ticket.getId() );
+			System.out.println( "initialisation requête 'SupprimerTicket()'" );
+            // exécution de la requête DELETE
+            int statut = preparedStatement.executeUpdate();
+			System.out.println( "execution requête 'SupprimerTicket()'" );
+            if ( statut == 0 ) {
+                throw new DAOException( "Échec de la suppression de le ticket, aucune ligne supprimée de la table." );
+            } else {
+            	ticket.setId( null );
+            }
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+			fermetureRessourcesSQL( connexion, preparedStatement, resultSet );
+        }
 	}
 
 }

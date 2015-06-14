@@ -11,7 +11,7 @@ import dao.DAOFactory;
 import dao.TicketDao;
 import beans.Ticket;
 
-public class AjouterForm {
+public class TicketForm {
 	// classe métier qui traite les saisies du formulaire d'ajout d'un ticket
 	
 		
@@ -38,7 +38,7 @@ public class AjouterForm {
 		return erreurs;
 	}
 	
-	public AjouterForm( DAOFactory daoFactory) {
+	public TicketForm( DAOFactory daoFactory) {
 		// récupération de l'objet DAO à partir de la fabrique donnée au constructeur
 		ticketDao = daoFactory.getTicketDao();
 	}
@@ -54,7 +54,7 @@ public class AjouterForm {
 		
 		try { // l'accès en BD peut générer des erreurs SQL
 			if ( erreurs.isEmpty() ) {
-				ticketDao.creer( ticket ); // dans la base, via le DAO
+				ticketDao.creerTicket( ticket ); // dans la base, via le DAO
 				resultat = "Succès de l'ajout.";
 			} else {
 				resultat = "Echec de l'ajout.";
@@ -77,7 +77,7 @@ public class AjouterForm {
 			ticket.setTitre (titre);
 		} else {
 			erreurs.put("titre", "Saisir un titre.");
-			System.out.println( "   ...adresse mail vide" );
+			
 		}
 	}
 
@@ -85,7 +85,7 @@ public class AjouterForm {
 	   if ( description != null) { // paramètres non vides
 		   
 		   ticket.setDescription( description );
-	   } else { // mdp non fourni
+	   } else { 
 		   erreurs.put( "description", "La description est obligatoire." );
 	   }
 	}

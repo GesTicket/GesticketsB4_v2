@@ -1,4 +1,5 @@
-/beans/
-/dao/
 /forms/
 /servlets/
+/dao/
+/filters/
+/beans/

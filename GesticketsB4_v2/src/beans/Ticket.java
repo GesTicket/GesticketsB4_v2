@@ -1,8 +1,10 @@
 package beans;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Ticket {
+@SuppressWarnings("serial")
+public class Ticket implements Serializable {
 
 	private Long id;
 	private String titre;
@@ -30,9 +32,16 @@ public class Ticket {
 	public Timestamp getDateCreation() {
 		return dateCreation;
 	}
-	public void setDateCreation(Timestamp dateCréation) {
-		this.dateCreation = dateCréation;
+	public void setDateCreation(Timestamp dateCreation) {
+		this.dateCreation = dateCreation;
 	}
-	
-
+	public Ticket() {
+		
+	}
+	public Ticket( int id, String titre, String description) {
+		setId((long) id);
+		setTitre(titre);
+		setDescription(description);
+	}	
+    
 }
