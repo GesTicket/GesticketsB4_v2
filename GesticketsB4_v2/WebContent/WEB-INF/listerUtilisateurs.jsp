@@ -1,7 +1,7 @@
-<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <!--
-    ici, pas d'attribut transmis par la servlet de contrÃ´le ListeUtilisateurs
+    ici, pas d'attribut transmis par la servlet de contrôle ListeUtilisateurs
 -->
 <html>
     <head>
@@ -13,35 +13,35 @@
 <body>
     <div id="corps">
     <c:choose>
-        <%-- si aucun utilisateurn'existe en session, message par dÃ©faut --%>
+        <%-- si aucun utilisateurn'existe en session, message par défaut --%>
         <c:when test="${ empty sessionScope.mapUtilisateurs }">
-            <p class="erreur">Aucun utilisateur enregistrÃ©.</p>
+            <p class="erreur">Aucun utilisateur enregistré.</p>
         </c:when>
-        <%-- sinon, gÃ©nÃ©ration d'une table des utilisateurs --%>
+        <%-- sinon, génération d'une table des utilisateurs --%>
         <c:otherwise>
-        <table class="table">
+        <table class="table table-bordered">
             <tr>
                 <th>id</th>
                 <th>Email</th>
                 <th>Login</th>
                 <th>nom</th>
-                <th>prÃ©nom</th>
+                <th>prénom</th>
                 <th>profil</th>
                 <th>Date inscription</th>
                 <th class="action">Action</th>
             </tr>
             <%-- parcours de la MAP des utilisateurs en session et  utilisation de l'objet varStatus. --%>
             <c:forEach items="${ sessionScope.mapUtilisateurs }" var="mapUtilisateurs" varStatus="boucle">
-                <%-- Simple test de paritÃ© sur l'index de parcours, pour alterner la couleur de fond de chaque ligne du tableau. --%>
-                 <tr class="${boucle.index % 2 == 0 ? 'pair' : 'impair'}">
-                    <%-- Affichage des propriÃ©tÃ©s du bean Client, qui est stockÃ© en tant que valeur de l'entrÃ©e courante de la map --%>
+                <%-- Simple test de parité sur l'index de parcours, pour alterner la couleur de fond de chaque ligne du tableau. --%>
+                 <tr class="${boucle.index % 2 == 0 ? 'active' : ''}">
+                    <%-- Affichage des propriétés du bean Client, qui est stocké en tant que valeur de l'entrée courante de la map --%>
                     <td><c:out value="${ mapUtilisateurs.value.id }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.email }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.login }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.nom }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.prenom }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.profil}"/></td>
-                    <td><c:out value="${ mapUtilisateurs.value.dateInscription }"/></td>
+                    <td><fmt:formatDate pattern="dd/MM/yyyy - hh:mm:ss" value="${ mapUtilisateurs.value.dateInscription }" /></td>
                     <td><a class="btn btn-default btn-xs" href="<c:url value="/modificationUtilisateur">
                     <c:param name="idUtilisateur" value="${ mapUtilisateurs.key }" /></c:url>" role="button">Modifier</a>
                     <a class="btn btn-default btn-xs" href="<c:url value="/suppressionUtilisateur">
@@ -53,8 +53,8 @@
         </c:otherwise>
     </c:choose>
     </div>
-    <a class="btn btn-default" href="<c:url value="/creationUtilisateur"/>" role="button">crÃ©er un utilisateur</a>
-    <a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour Ã  l'accueil</a>
+    <a class="btn btn-default" href="<c:url value="/creationUtilisateur"/>" role="button">créer un utilisateur</a>
+    <a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>
