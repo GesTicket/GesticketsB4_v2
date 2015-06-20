@@ -228,21 +228,21 @@ public class TicketDaoImpl implements TicketDao {
 		Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Ticket> tickets = new ArrayList<Ticket>();
+        List<Ticket> mapTickets = new ArrayList<Ticket>();
 
         try {
             connexion = daoFactory.getConnection();
             preparedStatement = connexion.prepareStatement( SQL_SELECT );
             resultSet = preparedStatement.executeQuery();
             while ( resultSet.next() ) {
-            	tickets.add( map( resultSet ) );
+            	mapTickets.add( map( resultSet ) );
             }
         } catch ( SQLException e ) {
             throw new DAOException( e );
         } finally {
         	fermetureRessourcesSQL( connexion, preparedStatement, resultSet );
         }
-        return tickets;
+        return mapTickets;
 	}
 	
 	public void supprimerTicket( Ticket ticket ) throws DAOException {

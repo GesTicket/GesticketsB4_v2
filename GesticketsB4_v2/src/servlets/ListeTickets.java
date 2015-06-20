@@ -20,21 +20,21 @@ public class ListeTickets extends HttpServlet {
 	
 	// identifiant de l'attribut de scope Application donnant la référence de la fabrique de DAOs
 	private static final String ATT_DAO_FACTORY_ID = "daoFactory";
-	
-	public static final String SESSION_UTILISATEURS = "utilisateurs"; 
+	public static final String ATT_SESSION_TICKETS = "mapTickets";
+	public static final String SESSION_UTILISATEURS = "mapUtilisateurs"; 
 	
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
 		@SuppressWarnings("unchecked")
-		Map<String, Ticket> tickets = (HashMap<String, Ticket>) session.getAttribute( SESSION_UTILISATEURS );
+		Map<String, Ticket> mapTickets = (HashMap<String, Ticket>) session.getAttribute( SESSION_UTILISATEURS );
 		
-		tickets = new HashMap<String, Ticket>();
+		mapTickets = new HashMap<String, Ticket>();
 		
 		
 	    // Ajout du Bean à l'objet requête
-	   	request.setAttribute( SESSION_UTILISATEURS, tickets );
+	   	request.setAttribute( ATT_SESSION_TICKETS, mapTickets );
 	   	
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}

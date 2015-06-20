@@ -11,7 +11,7 @@
     <div id="corps">
     <c:choose>
         <%-- si aucun utilisateurn'existe en session, message par défaut --%>
-        <c:when test="${ empty sessionScope.tickets }">
+        <c:when test="${ empty sessionScope.mapTickets }">
             <p class="erreur">Aucun ticket saisi.</p>
         </c:when>
        	<c:otherwise>
@@ -23,12 +23,12 @@
                 <th>Date de création</th>
                 <th class="action">Action</th>
             </tr>
-          	<c:forEach items="${ sessionScope.tickets }" var="maptickets" varStatus="boucle">
+          	<c:forEach items="${ sessionScope.mapTickets }" var="mapTickets" varStatus="boucle">
                 <tr class="${boucle.index % 2 == 0 ? 'pair' : 'impair'}">
-                    <td><c:out value="${ maptickets.value.id }"/></td>
-                    <td><c:out value="${ maptickets.value.titre }"/></td>
-                    <td><c:out value="${ maptickets.value.description }"/></td>
-                    <td><c:out value="${ maptickets.value.dateCreation }"/></td>
+                    <td><c:out value="${ mapTickets.value.id }"/></td>
+                    <td><c:out value="${ mapTickets.value.titre }"/></td>
+                    <td><c:out value="${ mapTickets.value.description }"/></td>
+                    <td><c:out value="${ mapTickets.value.dateCreation }"/></td>
                     <td>Modifier</td>
                 </tr>
             </c:forEach>
