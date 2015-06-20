@@ -21,7 +21,7 @@
 	<p><a class="btn btn-default" href="<c:url value="/listeUtilisateurs"/>" role="button">lister les utilisateurs</a></p>
 	<br />
 </c:if>
-<p><a class="btn btn-default" href="<c:url value="/ajouterTicket"/>" role="button">ajouter un ticket</a></p>
+<p><a class="btn btn-default" href="<c:url value="/ajouterTicket"/>" role="button">Ajouter un ticket</a></p>
 <br />
 <p><a class="btn btn-default" href="<c:url value="/listeTickets"/>" role="button">Liste des tickets</a></p>
 <br />

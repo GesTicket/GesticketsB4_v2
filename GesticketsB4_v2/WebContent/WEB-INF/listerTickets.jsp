@@ -21,7 +21,6 @@
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Date de création</th>
-                <th class="action">Action</th>
             </tr>
           	<c:forEach items="${ sessionScope.mapTickets }" var="mapTickets" varStatus="boucle">
                 <tr class="${boucle.index % 2 == 0 ? 'pair' : 'impair'}">
@@ -29,14 +28,14 @@
                     <td><c:out value="${ mapTickets.value.titre }"/></td>
                     <td><c:out value="${ mapTickets.value.description }"/></td>
                     <td><c:out value="${ mapTickets.value.dateCreation }"/></td>
-                    <td>Modifier</td>
                 </tr>
             </c:forEach>
         </table>
         </c:otherwise>
     </c:choose>
     </div>
-    <p><a href="<c:url value="/index.jsp"/>">retour à l'accueil</a></p>
+    <a class="btn btn-default" href="<c:url value="/ajouterTicket"/>" role="button">Ajouter un ticket</a>
+    <a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>

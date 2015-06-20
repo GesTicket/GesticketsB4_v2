@@ -23,6 +23,7 @@
             <tr>
                 <th>id</th>
                 <th>Email</th>
+                <th>Login</th>
                 <th>nom</th>
                 <th>prénom</th>
                 <th>profil</th>
@@ -36,6 +37,7 @@
                     <%-- Affichage des propriétés du bean Client, qui est stocké en tant que valeur de l'entrée courante de la map --%>
                     <td><c:out value="${ mapUtilisateurs.value.id }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.email }"/></td>
+                    <td><c:out value="${ mapUtilisateurs.value.login }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.nom }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.prenom }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.profil}"/></td>

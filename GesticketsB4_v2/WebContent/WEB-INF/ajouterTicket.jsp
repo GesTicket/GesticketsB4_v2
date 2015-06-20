@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <title>Ajouter</title>
     <link type="text/css" rel="stylesheet" href="inc/style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 </head>
 
 <body>
-    <!-- la page est affichée en retour de GET /inscription ainsi qu'en retour de POST /inscription -->
-
+    
      <form  method="post" action="ajouterTicket">
     
     	<fieldset>
@@ -30,7 +30,7 @@
             <br />
             <p class="${ empty form.erreurs ? 'succes' : 'erreur' }">${ form.resultat }</p>
             <p>
-            	<a href="/GesticketsB4_v2/">Retour page accueil</a>
+            	<a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a>
             </p>
         </fieldset>
     </form>
