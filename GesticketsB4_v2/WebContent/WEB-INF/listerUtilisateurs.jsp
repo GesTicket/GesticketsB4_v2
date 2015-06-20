@@ -40,10 +40,10 @@
                     <td><c:out value="${ mapUtilisateurs.value.prenom }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.profil}"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.dateInscription }"/></td>
-                    <td><a href="<c:url value="/modificationUtilisateur"><c:param name="idUtilisateur" value="${ mapUtilisateurs.key }" /></c:url>">
-                    Modifier</a>
-                    <a href="<c:url value="/suppressionUtilisateur"><c:param name="idUtilisateur" value="${ mapUtilisateurs.key }" /></c:url>">
-                    Supprimer</a>
+                    <td><a class="btn btn-default btn-xs" href="<c:url value="/modificationUtilisateur">
+                    <c:param name="idUtilisateur" value="${ mapUtilisateurs.key }" /></c:url>" role="button">Modifier</a>
+                    <a class="btn btn-default btn-xs" href="<c:url value="/suppressionUtilisateur">
+                    <c:param name="idUtilisateur" value="${ mapUtilisateurs.key }" /></c:url>" role="button">Supprimer</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -51,8 +51,8 @@
         </c:otherwise>
     </c:choose>
     </div>
-    <p><a href="<c:url value="/creationUtilisateur"/>">créer un utilisateur</a></p>
-    <p><a href="<c:url value="/index.jsp"/>">retour à l'accueil</a></p>
+    <a class="btn btn-default" href="<c:url value="/creationUtilisateur"/>" role="button">créer un utilisateur</a>
+    <a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>

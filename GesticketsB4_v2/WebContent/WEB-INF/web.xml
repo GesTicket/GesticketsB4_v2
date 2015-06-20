@@ -64,14 +64,6 @@
     <url-pattern>/suppressionUtilisateur</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>Inscription</servlet-name>
-    <servlet-class>servlets.Inscription</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Inscription</servlet-name>
-    <url-pattern>/inscription</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>ListeTickets</servlet-name>
     <servlet-class>servlets.ListeTickets</servlet-class>
   </servlet>

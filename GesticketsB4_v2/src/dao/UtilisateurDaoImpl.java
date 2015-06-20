@@ -15,27 +15,13 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 	// requêtes SQL
 	private static final String SQL_SELECT_PAR_LOGIN = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur WHERE login = ?";
 	private static final String SQL_SELECT_PAR_EMAIL = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur WHERE email = ?";
-	/*
-	private static final String SQL_INSERT = 
-			"INSERT INTO Utilisateur "
-			+ "(nom, prenom, email, login, mot_de_passe, date_inscription, profil) "
-			+ "VALUES (?, ?, ?, ?, ?, , ?)";
-	/*
-	private static final String SQL_SELECT_ALL = 
-			"SELECT id, email, nom) "
-			+ "FROM Utilisateur ";
-	*/
-	/*private static final String SQL_DELETE_PAR_ID = 
-			"DELETE FROM Utilisateur WHERE id = ?";
-*/
-	
-	private static final String SQL_SELECT        = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur ORDER BY id";
-	private static final String SQL_SELECT_PAR_ID = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur WHERE id = ?";
-	private static final String SQL_INSERT        = "INSERT INTO Utilisateur (nom, prenom, email, login, mot_de_passe, date_inscription, profil) VALUES (?, ?, ?, ?, ?, NOW(), ?)";
-	private static final String SQL_UPDATE_PAR_ID = "UPDATE Utilisateur set nom=?, prenom=?, email=?, login=?, mot_de_passe=?, profil=? WHERE id = ?";
-	private static final String SQL_DELETE_PAR_ID = "DELETE FROM Utilisateur WHERE id = ?";
+	private static final String SQL_SELECT           = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur ORDER BY id";
+	private static final String SQL_SELECT_PAR_ID    = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur WHERE id = ?";
+	private static final String SQL_INSERT           = "INSERT INTO Utilisateur (nom, prenom, email, login, mot_de_passe, date_inscription, profil) VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+	private static final String SQL_UPDATE_PAR_ID    = "UPDATE Utilisateur set nom=?, prenom=?, email=?, login=?, mot_de_passe=?, profil=? WHERE id = ?";
+	private static final String SQL_DELETE_PAR_ID    = "DELETE FROM Utilisateur WHERE id = ?";
 	// scope SESSION
-	public static final String ATT_SESSION_USER  = "sessionUtilisateur";
+	public static final String ATT_SESSION_USER      = "sessionUtilisateur";
 
 	// référence de la fabrique de DAOs
 	private DAOFactory daoFactory;
@@ -43,7 +29,6 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 	public UtilisateurDaoImpl( DAOFactory daoFactory ) {
 		this.daoFactory = daoFactory;
 	}
-
 
     /* Implémentation de la méthode trouverLogin() définie dans l'interface UtilisateurDao */
 
@@ -173,15 +158,6 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             if ( statut == 0 ) {
                 throw new DAOException( "Échec de la modification de l'utilisateur." );
             }
-			// le traitement qui suit n'est effectué que si pas d'exception (<=> else <=> statut != 0)
-			// récupération de l'id auto-généré pour cet utilisateur
-            //valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-            //if ( valeursAutoGenerees.next() ) {
-                // Puis initialisation de la propriété id du bean Utilisateur avec sa valeur
-                //utilisateur.setId( valeursAutoGenerees.getLong( 1 ) );
-            //} else {
-                //throw new DAOException( "Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné." );
-            //}
         } catch ( SQLException e ) {
             throw new DAOException( e );
         } finally {

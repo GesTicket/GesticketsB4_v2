@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import dao.DAOException;
-//import dao.DAOFactory;
 import dao.UtilisateurDao;
 import beans.Utilisateur;
 
@@ -131,12 +130,6 @@ public class ModificationUtilisateurForm {
 			String regExp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)";
 			if ( email.matches( regExp ) ) { // adresse mail OK
 				utilisateur.setEmail( email ); // enregistrement dans le bean Utilisateur
-				//if ( utilisateurDao.trouverEmail( email ) == null ) { // adresse inconnue en table
-				//	System.out.println( "enregistrement @-mail nouvel user" );
-				//} else { // adresse déjà existante
-				//	erreurs.put( "email", "Cette adresse mail est déjà utilisée, en choisir une autre." );
-				//	System.out.println( "adresse mail déjà utlisée" );
-				//}
 		    } else { // adresse mail mal formée
 		    	erreurs.put( "email", "Saisir une adresse mail valide" );
 		    	System.out.println( "adresse mail mal formée" );
@@ -150,12 +143,6 @@ public class ModificationUtilisateurForm {
 	private void validerLogin( String login ) {
 		if ( login != null && login.length() >=3 ) { // paramètre non vide et au moins 3 car
 			utilisateur.setLogin( login );
-			//if ( utilisateurDao.trouverLogin( login ) == null ) { // login inconnu en table
-			//	System.out.println( "enregistrement @-mail nouvel user" );
-			//} else { // login déjà existant
-			//	erreurs.put( "login", "Ce login est déjà utilisé, en choisir un autre." );
-			//	System.out.println( "login déjà utlisé" );
-			//}
 			System.out.println( "Login OK" );
 		} else {
 			erreurs.put( "login", "Le login doit avoir au moins 3 caractères." );

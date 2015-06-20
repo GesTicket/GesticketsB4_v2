@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-//import dao.DAOException;
 import dao.DAOFactory;
 import dao.UtilisateurDao;
 import forms.ModificationUtilisateurForm;
@@ -61,9 +60,6 @@ public class ModificationUtilisateur extends HttpServlet {
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
-		// Récupération de la fabrique dans la portée application
-    	//DAOFactory daoFactory = (DAOFactory) getServletContext().getAttribute( ATT_DAO_FACTORY_ID );
-				
 		// instanciation d'un objet métier de validation des saisies du formulaire d'inscription
 		ModificationUtilisateurForm form = new ModificationUtilisateurForm( utilisateurDao );
 		
