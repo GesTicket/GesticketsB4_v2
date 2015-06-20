@@ -19,7 +19,7 @@
         </c:when>
         <%-- sinon, génération d'une table des utilisateurs --%>
         <c:otherwise>
-        <table class="table">
+        <table class="table table-bordered">
             <tr>
                 <th>id</th>
                 <th>Email</th>
@@ -32,7 +32,7 @@
             <%-- parcours de la MAP des utilisateurs en session et  utilisation de l'objet varStatus. --%>
             <c:forEach items="${ sessionScope.mapUtilisateurs }" var="mapUtilisateurs" varStatus="boucle">
                 <%-- Simple test de parité sur l'index de parcours, pour alterner la couleur de fond de chaque ligne du tableau. --%>
-                 <tr class="${boucle.index % 2 == 0 ? 'pair' : 'impair'}">
+                 <tr class="${boucle.index % 2 == 0 ? 'active' : ''}">
                     <%-- Affichage des propriétés du bean Client, qui est stocké en tant que valeur de l'entrée courante de la map --%>
                     <td><c:out value="${ mapUtilisateurs.value.id }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.email }"/></td>
