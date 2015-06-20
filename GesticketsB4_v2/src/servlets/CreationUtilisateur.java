@@ -40,9 +40,6 @@ public class CreationUtilisateur extends HttpServlet {
 
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-
-		// Récupération de la fabrique dans la portée application
-    	//DAOFactory daoFactory = (DAOFactory) getServletContext().getAttribute( ATT_DAO_FACTORY_ID );
 				
 		// instanciation d'un objet métier de validation des saisies du formulaire d'inscription
 		CreationUtilisateurForm form = new CreationUtilisateurForm( utilisateurDao );

@@ -10,6 +10,7 @@
         <meta charset="utf-8" />
         <title>Affichage d'un utilisateur</title>
         <link type="text/css" rel="stylesheet" href="<c:url value="/inc/style.css"/>" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     </head>
     <body>
          <div id="corps">
@@ -23,6 +24,6 @@
             <p>Profil : <c:out value="${ utilisateur.profil }"/></p>
             <p>Date d'inscription : <c:out value="${ utilisateur.dateInscription }"/></p>
         </div>
-        <p><a href="<c:url value="/index.jsp"/>">accueil</a></p>
+        <p><a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a></p>
     </body>
 </html>

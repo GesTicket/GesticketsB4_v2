@@ -6,6 +6,7 @@
     <title>Modification d'un utilisateur
     </title>
     <link type="text/css" rel="stylesheet" href="inc/style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -72,11 +73,11 @@
             <!-- value="<c:out value="${ utilisateur.profil }"/>" -->
             <br />
 
-           <input type="submit" value="Valider" class="${ empty form.resultat ? 'sansLabel' : '' }" />
+           <input type="submit" value="Valider" class="sansLabel" />
             <br />
             <p class="${ empty form.erreurs ? 'succes' : 'erreur' }">${ form.resultat }</p>
         </fieldset>
     </form>
-    <p><a href="<c:url value="/index.jsp"/>">retour à l'accueil</a></p>
+    <p><a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a></p>
 </body>
 </html>

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import dao.DAOException;
-import dao.DAOFactory;
 import dao.UtilisateurDao;
 
 import beans.Utilisateur;

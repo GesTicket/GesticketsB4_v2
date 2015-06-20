@@ -16,19 +16,19 @@
 <c:set var="profil" value="administrateur"/>
 <c:if test="${sessionScope.sessionUtilisateur.profil == profil}">
 	<%-- fonctions accessibles uniquement au profil administrateur --%>
-	<p><a href="<c:url value="/creationUtilisateur"/>">créer un utilisateur</a></p>
+	<p><a class="btn btn-default" href="<c:url value="/creationUtilisateur"/>" role="button">créer un utilisateur</a></p>
 	<br />
-	<p><a href="<c:url value="/listeUtilisateurs"/>">lister les utilisateurs</a></p>
+	<p><a class="btn btn-default" href="<c:url value="/listeUtilisateurs"/>" role="button">lister les utilisateurs</a></p>
 	<br />
 </c:if>
-<p><a href="<c:url value="/ajouterTicket"/>">ajouter un ticket</a></p>
+<p><a class="btn btn-default" href="<c:url value="/ajouterTicket"/>" role="button">ajouter un ticket</a></p>
 <br />
-<p><a href="<c:url value="/listeTickets"/>">Liste des tickets</a></p>
+<p><a class="btn btn-default" href="<c:url value="/listeTickets"/>" role="button">Liste des tickets</a></p>
 <br />
-<p><a href="<c:url value="/deconnexion"/>">se déconnecter</a></p>
+<p><a class="btn btn-default" href="<c:url value="/deconnexion"/>" role="button">se déconnecter</a></p>
 </c:when>
 <c:otherwise>
-<p><a href="<c:url value="/connexion"/>">se connecter</a></p>
+<p><a class="btn btn-default" href="<c:url value="/connexion"/>" role="button">se connecter</a></p>
 </c:otherwise>
 </c:choose>
 </div>
