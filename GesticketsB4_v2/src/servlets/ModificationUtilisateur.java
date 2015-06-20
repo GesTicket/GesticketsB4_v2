@@ -10,16 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+//import dao.DAOException;
 import dao.DAOFactory;
 import dao.UtilisateurDao;
-import forms.CreationUtilisateurForm;
+import forms.ModificationUtilisateurForm;
 import beans.Utilisateur;
 
 @SuppressWarnings("serial")
-public class CreationUtilisateur extends HttpServlet {
+public class ModificationUtilisateur extends HttpServlet {
 	
-	private static final String VUE_CREER_UTIL       = "/WEB-INF/creerUtilisateur.jsp";
+	private static final String VUE_MODIF_UTIL       = "/WEB-INF/modifierUtilisateur.jsp";
 	private static final String VUE_AFFICH_UTIL      = "/WEB-INF/afficherUtilisateur.jsp";
+	private static final String PARAM_ID_USER        = "idUtilisateur";
 	private static final String ATT_FORM             = "form";
 	private static final String ATT_USER             = "utilisateur";
 	public static final String SESSION_UTILISATEURS  = "mapUtilisateurs";
@@ -35,7 +37,25 @@ public class CreationUtilisateur extends HttpServlet {
 	
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher( VUE_CREER_UTIL ).forward( request, response );
+
+	    /* Récupération du paramètre */
+        String idUtilisateur = getValeurParametre( request, PARAM_ID_USER );
+        System.out.println( "n° d'utilisateur à modifier : " + idUtilisateur );
+        Long id = Long.parseLong( idUtilisateur );
+
+        // trouver utilisateur
+		if ( utilisateurDao.trouverUtilisateur( id ) == null ) {
+			// si utilisateur inconnu
+			System.out.println( "utilisateur inconnu" );
+		} else {
+			// sinon utilisateur connu
+			System.out.println( "utilisateur OK" );
+	 		// intancie un bean Client et retourne sa référence en sortie
+	    	Utilisateur utilisateur = utilisateurDao.trouverUtilisateur( id );
+	        request.setAttribute(ATT_USER, utilisateur);
+		}
+		
+        getServletContext().getRequestDispatcher( VUE_MODIF_UTIL ).forward( request, response );
 	}
 
 	@Override
@@ -45,11 +65,11 @@ public class CreationUtilisateur extends HttpServlet {
     	//DAOFactory daoFactory = (DAOFactory) getServletContext().getAttribute( ATT_DAO_FACTORY_ID );
 				
 		// instanciation d'un objet métier de validation des saisies du formulaire d'inscription
-		CreationUtilisateurForm form = new CreationUtilisateurForm( utilisateurDao );
+		ModificationUtilisateurForm form = new ModificationUtilisateurForm( utilisateurDao );
 		
-		// traitement de la requête POST par la méthode creerUtilisateur de l'objet métier
+		// traitement de la requête POST par la méthode inscrireUtilisateur de l'objet métier
 		// et récupération au retour du bean Utilisateur créé
-		Utilisateur utilisateur = form.creerUtilisateur( request );
+		Utilisateur utilisateur = form.modifierUtilisateur( request );
 		
 		// stockage de l'objet de traitement et du bean dans l'objet requête, pour la JSP
 		request.setAttribute( ATT_FORM, form );
@@ -74,7 +94,18 @@ public class CreationUtilisateur extends HttpServlet {
         	getServletContext().getRequestDispatcher( VUE_AFFICH_UTIL ).forward( request, response);
         } else {
         	// erreurs : réaffichage du formulaire avec les erreurs
-        	getServletContext().getRequestDispatcher( VUE_CREER_UTIL ).forward( request, response );
+        	getServletContext().getRequestDispatcher( VUE_MODIF_UTIL ).forward( request, response );
         }
 	}
+	
+    // Méthode utilitaire qui retourne null si un paramètre est vide, et son contenu sinon.
+	
+    private static String getValeurParametre( HttpServletRequest request, String nomChamp ) {
+        String valeur = request.getParameter( nomChamp );
+        if ( valeur == null || valeur.trim().length() == 0 ) {
+            return null;
+        } else {
+            return valeur;
+        }
+    }
 }

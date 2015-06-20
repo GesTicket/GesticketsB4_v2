@@ -11,6 +11,8 @@ public interface UtilisateurDao {
 
 	void creerUtilisateur( Utilisateur utilisateur ) throws DAOException;
 	
+	void modifierUtilisateur( Utilisateur utilisateur ) throws DAOException;
+
 	Utilisateur trouverUtilisateur(long id) throws DAOException;
 	
 	List<Utilisateur> listerUtilisateurs() throws DAOException;

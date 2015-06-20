@@ -32,6 +32,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 	private static final String SQL_SELECT        = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur ORDER BY id";
 	private static final String SQL_SELECT_PAR_ID = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur WHERE id = ?";
 	private static final String SQL_INSERT        = "INSERT INTO Utilisateur (nom, prenom, email, login, mot_de_passe, date_inscription, profil) VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+	private static final String SQL_UPDATE_PAR_ID = "UPDATE Utilisateur set nom=?, prenom=?, email=?, login=?, mot_de_passe=?, profil=? WHERE id = ?";
 	private static final String SQL_DELETE_PAR_ID = "DELETE FROM Utilisateur WHERE id = ?";
 	// scope SESSION
 	public static final String ATT_SESSION_USER  = "sessionUtilisateur";
@@ -106,7 +107,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         return utilisateur;
     }
 
-    /* Implémentation de la méthode creer() définie dans l'interface UtilisateurDao */
+    /* Implémentation de la méthode creerUtilisateur() définie dans l'interface UtilisateurDao */
 
     @Override
     public void creerUtilisateur( Utilisateur utilisateur ) throws DAOException {
@@ -147,6 +148,47 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         }
     }
 
+    /* Implémentation de la méthode modifierUtilisateur() définie dans l'interface UtilisateurDao */
+
+    @Override
+    public void modifierUtilisateur( Utilisateur utilisateur ) throws DAOException {
+
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+        	// récupération de la connexion à la base, via la fabrique
+            connexion = daoFactory.getConnection();
+            // préparation de la requête INSERT
+            preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_PAR_ID, true, 
+            		utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(), 
+            		utilisateur.getLogin(), utilisateur.getMotDePasse(), utilisateur.getProfil(), utilisateur.getId() );
+            System.out.println( "initialisation requête 'modifier(utilisateur)'" );
+            // exécution de l'insertion
+            int statut = preparedStatement.executeUpdate();
+			System.out.println( "execution requête 'modifier(utilisateur)'" );
+			System.out.println( "UPDATE " + utilisateur.getNom() + " statut=" + statut );
+            // Analyse du statut retourné par la requête d'insertion
+            if ( statut == 0 ) {
+                throw new DAOException( "Échec de la modification de l'utilisateur." );
+            }
+			// le traitement qui suit n'est effectué que si pas d'exception (<=> else <=> statut != 0)
+			// récupération de l'id auto-généré pour cet utilisateur
+            //valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+            //if ( valeursAutoGenerees.next() ) {
+                // Puis initialisation de la propriété id du bean Utilisateur avec sa valeur
+                //utilisateur.setId( valeursAutoGenerees.getLong( 1 ) );
+            //} else {
+                //throw new DAOException( "Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné." );
+            //}
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+            fermetureRessourcesSQL( connexion, preparedStatement, valeursAutoGenerees );
+        }
+    }
+    
     /* Implémentation de la méthode trouverUtilisateur() définie dans l'interface UtilisateurDao */
 
     @Override
@@ -161,21 +203,21 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+        List<Utilisateur> mapUtilisateurs = new ArrayList<Utilisateur>();
 
         try {
             connexion = daoFactory.getConnection();
             preparedStatement = connexion.prepareStatement( SQL_SELECT );
             resultSet = preparedStatement.executeQuery();
             while ( resultSet.next() ) {
-                utilisateurs.add( map( resultSet ) );
+                mapUtilisateurs.add( map( resultSet ) );
             }
         } catch ( SQLException e ) {
             throw new DAOException( e );
         } finally {
         	fermetureRessourcesSQL( connexion, preparedStatement, resultSet );
         }
-        return utilisateurs;
+        return mapUtilisateurs;
     }
 	
     /* Implémentation de la méthode supprimerUtilisateur() définie dans l'interface UtilisateurDao */

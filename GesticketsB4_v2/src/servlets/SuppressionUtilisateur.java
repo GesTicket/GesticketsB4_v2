@@ -21,7 +21,7 @@ public class SuppressionUtilisateur extends HttpServlet {
 	// identifiant de l'attribut de scope Application donnant la référence de la fabrique de DAOs
 	private static final String ATT_DAO_FACTORY_ID   = "daoFactory";
 	private static final String PARAM_ID_USER        = "idUtilisateur";
-	public static final String SESSION_UTILISATEURS  = "utilisateurs";
+	public static final String SESSION_UTILISATEURS  = "mapUtilisateurs";
 	private static final String VUE_LISTE_UTIL       = "/listeUtilisateurs";
 
 	private UtilisateurDao utilisateurDao;
@@ -40,21 +40,21 @@ public class SuppressionUtilisateur extends HttpServlet {
         /* Récupération de la Map des utilisateurs enregistrés en session */
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")
-		Map<Long, Utilisateur> utilisateurs = (HashMap<Long, Utilisateur>) session.getAttribute( SESSION_UTILISATEURS );
+		Map<Long, Utilisateur> mapUtilisateurs = (HashMap<Long, Utilisateur>) session.getAttribute( SESSION_UTILISATEURS );
 
         /* Si l'id de l'utilisateur et la Map des utilisateurs ne sont pas vides */
-        if ( id != null && utilisateurs != null ) {
+        if ( id != null && mapUtilisateurs != null ) {
             try {
                 /* Alors suppression de l'utilisateur de la BDD */
             	System.out.println( "suppression" );
-                utilisateurDao.supprimerUtilisateur( utilisateurs.get( id ) );
+                utilisateurDao.supprimerUtilisateur( mapUtilisateurs.get( id ) );
                 /* Puis suppression de l'utilisateur de la Map */
-                utilisateurs.remove( id );
+                mapUtilisateurs.remove( id );
             } catch ( DAOException e ) {
                 e.printStackTrace();
             }
             /* Et remplacement de l'ancienne Map en session par la nouvelle */
-            session.setAttribute( SESSION_UTILISATEURS, utilisateurs );
+            session.setAttribute( SESSION_UTILISATEURS, mapUtilisateurs );
         }
 
         /* Redirection vers la fiche récapitulative */

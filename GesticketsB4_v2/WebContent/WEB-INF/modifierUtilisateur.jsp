@@ -3,14 +3,15 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Création d'un utilisateur</title>
+    <title>Modification d'un utilisateur
+    </title>
     <link type="text/css" rel="stylesheet" href="inc/style.css" />
 </head>
 
 <body>
     <!-- la page est affichée en retour de GET /inscription ainsi qu'en retour de POST /inscription -->
 
-    <form method="post" action="creationUtilisateur">
+    <form method="post" action="modificationUtilisateur">
 
      <!-- si un bean identifié par 'utilisateur' existe, la valeur de chacun de ses attributs -->
      <!-- est affichée dans les différents champs de saisie de la page -->
@@ -19,8 +20,15 @@
      <!-- le résultat du traitement (succès ou échec) est extrait de l'attribut 'resultat' -->
     
         <fieldset>
-            <legend>Création</legend>
-            <p>Vous pouvez créer un utilisateur via ce formulaire.</p>
+            <legend>
+    		Modification
+            </legend>
+            <p>Vous pouvez modifier l'utilisateur via ce formulaire.</p>
+            <label for="id">Id <span class="requis">*</span></label>
+            <input type="text" id="id" name="id" readonly="readonly"
+                    value="<c:out value="${ utilisateur.id }"/>" size="20" maxlength="20" />
+            		<span class="erreur">${ form.erreurs['id'] }</span>
+            <br />
             <label for="nom">Nom <span class="requis">*</span></label>
             <input type="text" id="nom" name="nom" 
                     value="<c:out value="${ utilisateur.nom }"/>" size="20" maxlength="20" />

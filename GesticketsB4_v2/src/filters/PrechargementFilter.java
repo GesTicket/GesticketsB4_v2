@@ -23,7 +23,7 @@ import beans.Ticket;
 
 public class PrechargementFilter implements Filter {
 	private static final String ATT_DAO_FACTORY_ID        = "daoFactory";
-    public static final String ATT_SESSION_UTILISATEURS   = "utilisateurs";
+    public static final String ATT_SESSION_UTILISATEURS   = "mapUtilisateurs";
     public static final String ATT_SESSION_TICKETS = "tickets";
 
     private UtilisateurDao utilisateurDao;

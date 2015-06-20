@@ -40,6 +40,14 @@
     <url-pattern>/creationUtilisateur</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>ModificationUtilisateur</servlet-name>
+    <servlet-class>servlets.ModificationUtilisateur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModificationUtilisateur</servlet-name>
+    <url-pattern>/modificationUtilisateur</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>ListeUtilisateurs</servlet-name>
     <servlet-class>servlets.ListeUtilisateurs</servlet-class>
   </servlet>
