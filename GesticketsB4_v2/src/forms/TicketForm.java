@@ -6,10 +6,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 
+
+
+
 import dao.DAOException;
 import dao.DAOFactory;
 import dao.TicketDao;
 import beans.Ticket;
+import beans.Utilisateur;
 
 public class TicketForm {
 	// classe métier qui traite les saisies du formulaire d'ajout d'un ticket
@@ -45,7 +49,7 @@ public class TicketForm {
 
 	public Ticket ajouterTicket( HttpServletRequest request ) {
 				
-		ticket = new Ticket();
+		ticket = (Ticket) new Ticket();
 		
 		// récupération et validation des champs de saisie, maj du bean Ticket		
 		validerTitre( getValeurChamp( request, CHAMP_TITRE ) );
@@ -98,5 +102,51 @@ public class TicketForm {
         } else {
             return valeur;
         }
-    }    
+    }
+
+	public Ticket rechercherTicket(HttpServletRequest request) {
+		ticket = new Ticket();
+		
+		// récupération et validation des champs de saisie, maj du bean Utilisateur	
+		
+		trouverTitre( getValeurChamp( request, CHAMP_TITRE ) );
+		trouverDescription( getValeurChamp( request, CHAMP_DESCRIP ) );
+		
+		
+		try { // l'accès en BD peut générer des erreurs SQL
+			if ( erreurs.isEmpty() ) {
+				
+				ticketDao.rechercherTicket( ticket ); // dans la base, via le DAO
+				resultat = "Succès de la recherche.";
+			} else {
+				resultat = "Echec de la recherche.";
+			}
+		} catch (DAOException e) {
+			resultat = "Echec de la recherche, une erreur est survenue, réessayer";
+			// si la MAP des erreurs est vide, on enregistre l'erreur DAO pour
+			// différencier la couleur d'affichage dans la JSP de retour
+			if ( erreurs.isEmpty() ) {
+				erreurs.put( "dao", resultat );
+			}
+//				e.printStackTrace();
+		}
+		System.out.println( "Résultat : " + resultat );
+		return ticket;
+	}
+
+	private void trouverDescription(String descrip) {
+		if ( descrip != null) { // paramètre non vide
+			ticket.setDescription (descrip);
+					
+		}
+		
+	}
+
+	private void trouverTitre(String titre) {
+		if ( titre != null) { // paramètre non vide
+			ticket.setTitre(titre);
+					
+		}
+		
+	}    
 }

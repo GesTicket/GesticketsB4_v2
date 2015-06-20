@@ -17,14 +17,8 @@ public class TicketDaoImpl implements TicketDao {
 	private static final String SQL_SELECT = 
 			"SELECT * FROM Ticket";
 	
-	private static final String SQL_SELECT_PAR_ID = 
-			"SELECT id, titre, description, dateCreation FROM Ticket WHERE id = ?";
-	
-	private static final String SQL_SELECT_PAR_TITRE = 
-			"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre = ?";
-	    
-	private static final String SQL_SELECT_PAR_DESCRIPTION =
-			"SELECT id, titre, description, dateCreation FROM Ticket WHERE description= ?";
+	private static final String SQL_SELECT_PAR_ATT = 
+			"SELECT id, titre, description, dateCreation FROM Ticket WHERE id like '%contentSearch%' or titre like '%contentSearch%' or descritpion like '%contentSearch%' or dateCreation like '%contentSearch%'";
 	
 	private static final String SQL_INSERT = 
 			"INSERT INTO Ticket (titre, description, dateCreation) VALUES (?, ?, NOW())";
@@ -41,41 +35,7 @@ public class TicketDaoImpl implements TicketDao {
 
     /* Implémentation de la méthode trouver() définie dans l'interface TicketDao */
 
-    @Override
-
-    public Ticket trouverTitre( String titre ) throws DAOException {
-
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Ticket ticket = null;
-
-        try {
-        	// récupération de la connexion à la base, via la fabrique
-            connexion = daoFactory.getConnection();
-            // préparation de la requête SELECT
-            preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_TITRE, false, titre );
-			System.out.println( "preparedStatement OK" );
-            // exécution de la requête SELECT
-            resultSet = preparedStatement.executeQuery();
-			System.out.println( "executeQuery OK" );
-			// mapping du ResultSet dans un bean Ticket
-			if ( resultSet.next() ) { // positionnement sur la première entité obtenue
-				ticket = new Ticket();
-				ticket.setId( resultSet.getLong( "id" ) );
-				ticket.setTitre( resultSet.getString( "titre" ) );
-				ticket.setDescription( resultSet.getString( "description" ) );
-				ticket.setDateCreation( resultSet.getTimestamp( "dateCreation" ) );
-			}
-        } catch ( SQLException e ) {
-            throw new DAOException( e );
-        } finally {
-			fermetureRessourcesSQL( connexion, preparedStatement, resultSet );
-        }
-
-        return ticket;
-        
-    }
+   
     
     
 
@@ -192,19 +152,19 @@ public class TicketDaoImpl implements TicketDao {
 	
 		
 	@Override
-	public Ticket trouverDescription(String description) throws DAOException {
+	public Ticket rechercherTicket (Ticket ticket) throws DAOException {
 		
 		Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Ticket ticket = null;
+        
         
         try {
         	connexion = daoFactory.getConnection();
-        	preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_DESCRIPTION, false, description );
-			System.out.println( "initialisation requête 'trouverDescription()'" );
+        	preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_ATT, false, ticket );
+			System.out.println( "initialisation requête 'trouverTicket()'" );
 			resultSet = preparedStatement.executeQuery();
-			System.out.println( "execution requête 'trouverDescription()'" );
+			System.out.println( "execution requête 'trouverTicket()'" );
 			if ( resultSet.next() ) { // positionnement sur la première entité obtenue
 				ticket = map( resultSet );
 			}
@@ -216,11 +176,7 @@ public class TicketDaoImpl implements TicketDao {
         return ticket;
 	}
 
-	@Override
-	public Ticket trouverTicket(long id) throws DAOException {
-		// TODO Auto-generated method stub
-		return trouver(SQL_SELECT_PAR_ID);
-	}
+	
 	
 	@Override
 	public List<Ticket> listerTickets() throws DAOException {

@@ -79,6 +79,14 @@
     <servlet-name>AjouterTicket</servlet-name>
     <url-pattern>/ajouterTicket</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>RechercherTicket</servlet-name>
+    <servlet-class>servlets.RechercherTicket</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RechercherTicket</servlet-name>
+    <url-pattern>/rechercherTicket</url-pattern>
+  </servlet-mapping>
   <filter>
   	<filter-name>PrechargementFilter</filter-name>
   	<filter-class>filters.PrechargementFilter</filter-class>
