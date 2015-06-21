@@ -4,23 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
-
-
-
+import javax.servlet.http.HttpSession;
 
 import dao.DAOException;
 import dao.DAOFactory;
 import dao.TicketDao;
 import beans.Ticket;
-import beans.Utilisateur;
 
 public class TicketForm {
 	// classe métier qui traite les saisies du formulaire d'ajout d'un ticket
-	
 		
-    private static final String CHAMP_TITRE  = "titre";
+    private static final String CHAMP_TITRE     = "titre";
     private static final String CHAMP_DESCRIP   = "description";
+    private static final String CHAMP_MOT_CLE   = "motCle";
     
     // le bean qui va être créé si tout est correct
     private Ticket ticket;
@@ -134,10 +130,39 @@ public class TicketForm {
 		return ticket;
 	}
 
+	public void rechercherTicketsMotCle(HttpServletRequest request) {
+
+    	// Récupération de la session depuis la requête
+    	HttpSession session = request.getSession(true);
+    	
+		// enregistrement dans une variable de session
+    	String motCle = getValeurChamp( request, CHAMP_MOT_CLE );
+		session.setAttribute("sessionMotCle", getValeurChamp( request, CHAMP_MOT_CLE ) );
+
+		// récupération et validation des champs de saisie		
+		validerMotCle( getValeurChamp( request, CHAMP_MOT_CLE ) );		
+		
+		try { // l'accès en BD peut générer des erreurs SQL
+			if ( erreurs.isEmpty() ) {
+				//ticketDao.rechercherTicketsMotCle( motCle ); // dans la base, via le DAO
+				resultat = "Succès de la recherche par mot clé.";
+			} else {
+				resultat = "Echec de la recherche par mor clé.";
+			}
+		} catch (DAOException e) {
+			resultat = "Echec de la recherche par mot clé, une erreur est survenue, réessayer";
+			// si la MAP des erreurs est vide, on enregistre l'erreur DAO pour
+			// différencier la couleur d'affichage dans la JSP de retour
+			if ( erreurs.isEmpty() ) {
+				erreurs.put( "dao", resultat );
+			}
+//				e.printStackTrace();
+		}
+		System.out.println( "Résultat : " + resultat );
+	}
 	private void trouverDescription(String descrip) {
 		if ( descrip != null) { // paramètre non vide
 			ticket.setDescription (descrip);
-					
 		}
 		
 	}
@@ -145,8 +170,16 @@ public class TicketForm {
 	private void trouverTitre(String titre) {
 		if ( titre != null) { // paramètre non vide
 			ticket.setTitre(titre);
-					
 		}
 		
-	}    
+	}
+	
+	private void validerMotCle( String motCle ) {
+		if ( motCle != null ) { // paramètre non vide
+			System.out.println( "mot clé OK" );
+		} else {
+			erreurs.put( "motCle", "un mot clé doit être saisi." );
+			System.out.println( "mot clé non saisi" );
+		}
+	}
 }

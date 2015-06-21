@@ -13,19 +13,19 @@ import javax.servlet.http.HttpSession;
 import dao.DAOFactory;
 import forms.TicketForm;
 import beans.Ticket;
-import dao.TicketDao;
+//import dao.TicketDao;
 
+@SuppressWarnings("serial")
 public class RechercherTicket extends HttpServlet {
 	
 		
 	private static final String FORM_VUE = "/WEB-INF/rechercherTicket.jsp";
-	private static final String VUE_AFFICH_TICKET      = "/WEB-INF/rechercherTicket.jsp";
+	//private static final String VUE_AFFICH_TICKET      = "/WEB-INF/rechercherTicket.jsp";
 	private static final String ATT_FORM = "form";
 	
 	private static final String ATT_TICKET = "tickets";
 	private static final String ATT_DAO_FACTORY_ID = "daoFactory";
 	public static final String ATT_SESSION_TICKETS = "ticket";
-	public static final String SESSION_UTILISATEURS = "mapUtilisateurs"; 
 	
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,7 +48,7 @@ public class RechercherTicket extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		@SuppressWarnings("unchecked")
-		Map<String, Ticket> tickets = (HashMap<String, Ticket>) session.getAttribute( SESSION_UTILISATEURS );
+		Map<String, Ticket> tickets = (HashMap<String, Ticket>) session.getAttribute( ATT_SESSION_TICKETS );
 		
 		tickets = new HashMap<String, Ticket>();
 		

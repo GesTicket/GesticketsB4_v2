@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import beans.Ticket;
-import beans.Utilisateur;
+//import beans.Utilisateur;
 
 public class TicketDaoImpl implements TicketDao {
 
@@ -20,6 +20,10 @@ public class TicketDaoImpl implements TicketDao {
 	private static final String SQL_SELECT_PAR_ATT = 
 			"SELECT id, titre, description, dateCreation FROM Ticket WHERE id like '%contentSearch%' or titre like '%contentSearch%' or descritpion like '%contentSearch%' or dateCreation like '%contentSearch%'";
 	
+	private static final String SQL_SELECT_PAR_MOT_CLE = 
+			//"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre like ? or descritpion like ? or dateCreation like ?";
+			"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre like '%?%' or descritpion like '%?%'";
+
 	private static final String SQL_INSERT = 
 			"INSERT INTO Ticket (titre, description, dateCreation) VALUES (?, ?, NOW())";
 	
@@ -34,10 +38,6 @@ public class TicketDaoImpl implements TicketDao {
 	}
 
     /* Implémentation de la méthode trouver() définie dans l'interface TicketDao */
-
-   
-    
-    
 
     /* Implémentation de la méthode creer() définie dans l'interface UtilisateurDao */
 
@@ -176,6 +176,32 @@ public class TicketDaoImpl implements TicketDao {
         return ticket;
 	}
 
+	
+@Override
+public List<Ticket> rechercherTicketsMotCle ( String motCle ) throws DAOException {
+	
+	Connection connexion = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    List<Ticket> mapRechercheTickets = new ArrayList<Ticket>();
+   
+    
+    try {
+    	connexion = daoFactory.getConnection();
+    	preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_MOT_CLE, false, motCle, motCle );
+		System.out.println( "initialisation requête 'rechercheTickets()'" );
+		resultSet = preparedStatement.executeQuery();
+		System.out.println( "execution requête 'rechercheTickets()'" );
+		if ( resultSet.next() ) { // positionnement sur la première entité obtenue
+        	mapRechercheTickets.add( map( resultSet ) );
+		}
+    } catch ( SQLException e ) {
+        throw new DAOException( e );
+    } finally {
+		fermetureRessourcesSQL( connexion, preparedStatement, resultSet );
+    }
+    return mapRechercheTickets;
+}
 	
 	
 	@Override

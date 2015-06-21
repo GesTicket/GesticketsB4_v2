@@ -12,6 +12,8 @@ public interface TicketDao {
 	
 	Ticket rechercherTicket( Ticket ticket ) throws DAOException;
 		
+	List<Ticket> rechercherTicketsMotCle( String motCle ) throws DAOException;
+
 	List<Ticket> listerTickets() throws DAOException;
 	
 	void supprimerTicket(Ticket ticket) throws DAOException;
