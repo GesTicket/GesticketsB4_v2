@@ -1,5 +1,6 @@
 package forms;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,8 @@ public class TicketForm {
 		
 		try { // l'accès en BD peut générer des erreurs SQL
 			if ( erreurs.isEmpty() ) {
+				java.util.Date date= new java.util.Date();
+				ticket.setDateCreation( new Timestamp( date.getTime() ) );
 				ticketDao.creerTicket( ticket ); // dans la base, via le DAO
 				resultat = "Succès de l'ajout.";
 			} else {
