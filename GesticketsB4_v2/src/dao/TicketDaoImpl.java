@@ -180,7 +180,6 @@ public List<Ticket> rechercherTicketsMotCle ( String motCle ) throws DAOExceptio
 	
 	Connection connexion = null;
     PreparedStatement preparedStatement = null;
-    //Statement statement = null;
     ResultSet resultSet = null;
     List<Ticket> mapRechercheTickets = new ArrayList<Ticket>();
    

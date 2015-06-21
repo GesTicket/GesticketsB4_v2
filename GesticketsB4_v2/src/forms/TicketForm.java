@@ -148,8 +148,13 @@ public class TicketForm {
 		
 		try { // l'accès en BD peut générer des erreurs SQL
 			if ( erreurs.isEmpty() ) {
-				List<Ticket> mapRechercheTickets = ticketDao.rechercherTicketsMotCle( motCle ); // dans la base, via le DAO
-				session.setAttribute("MapRechercheTickets", mapRechercheTickets );
+				List<Ticket> listeTickets = ticketDao.rechercherTicketsMotCle( motCle ); // dans la base, via le DAO
+	            Map<Long, Ticket> mapRechercheTickets = new HashMap<Long, Ticket>();
+	            for ( Ticket ticket : listeTickets ) {
+	            	System.out.println( "remplissage mapRechercheTickets n° " + ticket.getId() );
+	                mapRechercheTickets.put( ticket.getId(), ticket );
+	            }
+	            session.setAttribute("mapRechercheTickets", mapRechercheTickets );
 				resultat = "Succès de la recherche par mot clé.";
 			} else {
 				resultat = "Echec de la recherche par mot clé.";
