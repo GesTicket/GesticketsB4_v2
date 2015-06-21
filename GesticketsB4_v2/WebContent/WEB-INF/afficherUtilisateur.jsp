@@ -10,7 +10,7 @@
     <body>
         <form class="form-horizontal">
             <fieldset>
-            <legend>Modification</legend>
+            <legend>Création/Modification</legend>
 			<p class="info">${ form.resultat }</p>
  			<div class="form-group">
 	            <label class="col-sm-2 control-label">Id</label>

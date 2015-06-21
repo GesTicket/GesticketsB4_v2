@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -23,11 +24,11 @@
                 <th>Date de création</th>
             </tr>
           	<c:forEach items="${ sessionScope.mapTickets }" var="mapTickets" varStatus="boucle">
-                <tr class="${boucle.index % 2 == 0 ? 'pair' : 'impair'}">
+                <tr class="${boucle.index % 2 == 0 ? 'active' : ''}">
                     <td><c:out value="${ mapTickets.value.id }"/></td>
                     <td><c:out value="${ mapTickets.value.titre }"/></td>
                     <td><c:out value="${ mapTickets.value.description }"/></td>
-                    <td><c:out value="${ mapTickets.value.dateCreation }"/></td>
+                    <td><fmt:formatDate pattern="dd/MM/yyyy - hh:mm:ss" value="${ mapTickets.value.dateCreation }"/></td>
                 </tr>
             </c:forEach>
         </table>

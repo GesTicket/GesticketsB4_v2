@@ -13,15 +13,14 @@ import javax.servlet.http.HttpSession;
 import dao.DAOFactory;
 import forms.TicketForm;
 import beans.Ticket;
-import beans.Utilisateur;
-import dao.TicketDao;
 
+@SuppressWarnings("serial")
 public class AjouterTicket extends HttpServlet {
 	
-	private static final String FORM_AJOUTER = "/WEB-INF/ajouterTicket.jsp";
-	private static final String VUE_AFFICH_TICKET      = "/WEB-INF/afficherTicket.jsp";
-	private static final String ATT_FORM = "form";
-	private static final String ATT_TICKET = "ticket";
+	private static final String FORM_AJOUTER       = "/WEB-INF/ajouterTicket.jsp";
+	private static final String VUE_AFFICH_TICKET  = "/WEB-INF/listerTickets.jsp";
+	private static final String ATT_FORM           = "form";
+	private static final String ATT_TICKET         = "ticket";
 	public static final String ATT_SESSION_TICKETS = "mapTickets";
 	// identifiant de l'attribut de scope Application donnant la référence de la fabrique de DAOs
 	private static final String ATT_DAO_FACTORY_ID = "daoFactory";
