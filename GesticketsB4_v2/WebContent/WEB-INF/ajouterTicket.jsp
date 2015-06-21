@@ -30,7 +30,7 @@
             <br />
             <p class="${ empty form.erreurs ? 'succes' : 'erreur' }">${ form.resultat }</p>
             <p>
-            	<a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a>
+            	<a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">Retour à l'accueil</a>
             </p>
         </fieldset>
     </form>

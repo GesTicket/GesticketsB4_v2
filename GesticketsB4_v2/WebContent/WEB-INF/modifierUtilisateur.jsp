@@ -83,6 +83,8 @@
         </fieldset>
     </form>
     <br />
-    <p><a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a></p>
+    
+    <a class="btn btn-default" href="<c:url value="/listeUtilisateurs"/>" role="button">Retour à la liste</a>
+    
 </body>
 </html>

@@ -91,6 +91,6 @@
         </fieldset>
     </form>
     <br />
-    <p><a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a></p>
+    <p><a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">Retour à l'accueil</a></p>
 </body>
 </html>

@@ -35,10 +35,9 @@
         </c:otherwise>
     </c:choose>
     </div>
-    <a class="btn btn-default" href="<c:url value="/rechercherTicket"/>" role="button">Rechercher ticket</a>
-    <a class="btn btn-default" href="<c:url value="/rechercherTicketsMotCle"/>" role="button">Rechercher tickets par mot clé</a>
+    <a class="btn btn-default" href="<c:url value="/rechercherTicketsMotCle"/>" role="button">Rechercher par mot clé</a>
     <a class="btn btn-default" href="<c:url value="/ajouterTicket"/>" role="button">Ajouter un ticket</a>
-    <a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">retour à l'accueil</a>
+    <a class="btn btn-default" href="<c:url value="/index.jsp"/>" role="button">Retour à l'accueil</a>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>
