@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import beans.Ticket;
 //import beans.Utilisateur;
 
@@ -21,8 +24,8 @@ public class TicketDaoImpl implements TicketDao {
 			"SELECT id, titre, description, dateCreation FROM Ticket WHERE id like '%contentSearch%' or titre like '%contentSearch%' or descritpion like '%contentSearch%' or dateCreation like '%contentSearch%'";
 	
 	private static final String SQL_SELECT_PAR_MOT_CLE = 
-			//"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre like ? or descritpion like ? or dateCreation like ?";
-			"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre like '%?%' or descritpion like '%?%'";
+			//"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre like '%?%' or description like '%?%'";
+			"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre like '%test%' or description like '%test%'";
 
 	private static final String SQL_INSERT = 
 			"INSERT INTO Ticket (titre, description, dateCreation) VALUES (?, ?, NOW())";
@@ -182,25 +185,29 @@ public List<Ticket> rechercherTicketsMotCle ( String motCle ) throws DAOExceptio
 	
 	Connection connexion = null;
     PreparedStatement preparedStatement = null;
+    //Statement statement = null;
     ResultSet resultSet = null;
     List<Ticket> mapRechercheTickets = new ArrayList<Ticket>();
    
     
     try {
     	connexion = daoFactory.getConnection();
-    	preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_MOT_CLE, false, motCle, motCle );
-		System.out.println( "initialisation requête 'rechercheTickets()'" );
+    	//preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_MOT_CLE, false, motCle, motCle );
+    	preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_MOT_CLE, false );
+    	System.out.println( "initialisation requête 'rechercheTicketsMotCle()'" );
+    	System.out.println( SQL_SELECT_PAR_MOT_CLE );
 		resultSet = preparedStatement.executeQuery();
-		System.out.println( "execution requête 'rechercheTickets()'" );
-		if ( resultSet.next() ) { // positionnement sur la première entité obtenue
-        	mapRechercheTickets.add( map( resultSet ) );
+		System.out.println( "execution requête 'rechercheTicketsMotCle()'" );
+		while ( resultSet.next() ) { // positionnement sur la première entité obtenue
+			System.out.println( "remplissage map ticket n° " + resultSet.getInt(1) );
+			mapRechercheTickets.add( map( resultSet ) );
 		}
     } catch ( SQLException e ) {
         throw new DAOException( e );
     } finally {
 		fermetureRessourcesSQL( connexion, preparedStatement, resultSet );
     }
-    return mapRechercheTickets;
+	return mapRechercheTickets ;
 }
 	
 	

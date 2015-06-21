@@ -130,7 +130,7 @@ public class TicketForm {
 		return ticket;
 	}
 
-	public void rechercherTicketsMotCle(HttpServletRequest request) {
+	public void rechercherTicketsMotCle( HttpServletRequest request ) {
 
     	// Récupération de la session depuis la requête
     	HttpSession session = request.getSession(true);
@@ -144,10 +144,10 @@ public class TicketForm {
 		
 		try { // l'accès en BD peut générer des erreurs SQL
 			if ( erreurs.isEmpty() ) {
-				//ticketDao.rechercherTicketsMotCle( motCle ); // dans la base, via le DAO
+				ticketDao.rechercherTicketsMotCle( motCle ); // dans la base, via le DAO
 				resultat = "Succès de la recherche par mot clé.";
 			} else {
-				resultat = "Echec de la recherche par mor clé.";
+				resultat = "Echec de la recherche par mot clé.";
 			}
 		} catch (DAOException e) {
 			resultat = "Echec de la recherche par mot clé, une erreur est survenue, réessayer";

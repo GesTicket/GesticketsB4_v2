@@ -16,6 +16,7 @@ import dao.DAOFactory;
 import forms.TicketForm;
 import beans.Ticket;
 //import dao.TicketDao;
+import beans.Utilisateur;
 
 @SuppressWarnings("serial")
 public class RechercherTicketsMotCle extends HttpServlet {
@@ -23,7 +24,7 @@ public class RechercherTicketsMotCle extends HttpServlet {
 	public static final String VUE_RECHERCHE       = "/WEB-INF/rechercherTicketsMotCle.jsp";
 	private static final String VUE_RESULTAT       = "/WEB-INF/ticketsRecherches.jsp";
 	private static final String ATT_FORM           = "form";
-	private static final String ATT_MOT_CLE        = "motCle";
+	//private static final String ATT_MOT_CLE        = "motCle";
 	private static final String ATT_DAO_FACTORY_ID = "daoFactory";
 	public static final String ATT_SESSION_TICKETS = "tickets";
 
@@ -37,6 +38,9 @@ public class RechercherTicketsMotCle extends HttpServlet {
 	public void doPost( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	// requête POST : validation des saisies, création de la MAP Erreurs et utilisation de variables de session
 
+		// accès aux attributs de scope session
+		//HttpSession session = request.getSession();
+
 		// Récupération de la fabrique dans la portée application
     	DAOFactory daoFactory = (DAOFactory) getServletContext().getAttribute( ATT_DAO_FACTORY_ID );
 
@@ -46,6 +50,9 @@ public class RechercherTicketsMotCle extends HttpServlet {
 		// traitement de la requête POST par la méthode rechercherTickets de l'objet métier
 		// et récupération au retour du bean Ticket créé
     	form.rechercherTicketsMotCle( request );
+
+	    // Ajout de la liste à l'objet session
+	   	//session.setAttribute( ATT_SESSION_TICKETS, mapRechercheTickets );
 
     	// stockage de la MAP des erreurs en attribut de la requête, pour les pages JSP
     	request.setAttribute( ATT_FORM, form );
