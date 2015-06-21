@@ -8,11 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import beans.Ticket;
-//import beans.Utilisateur;
 
 public class TicketDaoImpl implements TicketDao {
 
@@ -24,8 +20,7 @@ public class TicketDaoImpl implements TicketDao {
 			"SELECT id, titre, description, dateCreation FROM Ticket WHERE id like '%contentSearch%' or titre like '%contentSearch%' or descritpion like '%contentSearch%' or dateCreation like '%contentSearch%'";
 	
 	private static final String SQL_SELECT_PAR_MOT_CLE = 
-			//"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre like '%?%' or description like '%?%'";
-			"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre like '%test%' or description like '%test%'";
+			"SELECT id, titre, description, dateCreation FROM Ticket WHERE titre like ? or description like ?";
 
 	private static final String SQL_INSERT = 
 			"INSERT INTO Ticket (titre, description, dateCreation) VALUES (?, ?, NOW())";
@@ -191,9 +186,9 @@ public List<Ticket> rechercherTicketsMotCle ( String motCle ) throws DAOExceptio
    
     
     try {
+    	System.out.println( "mot clé : " + motCle );
     	connexion = daoFactory.getConnection();
-    	//preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_MOT_CLE, false, motCle, motCle );
-    	preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_MOT_CLE, false );
+    	preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_MOT_CLE, false, '%'+motCle+'%', '%'+motCle+'%' );
     	System.out.println( "initialisation requête 'rechercheTicketsMotCle()'" );
     	System.out.println( SQL_SELECT_PAR_MOT_CLE );
 		resultSet = preparedStatement.executeQuery();

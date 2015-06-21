@@ -1,6 +1,7 @@
 package forms;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -144,7 +145,8 @@ public class TicketForm {
 		
 		try { // l'accès en BD peut générer des erreurs SQL
 			if ( erreurs.isEmpty() ) {
-				ticketDao.rechercherTicketsMotCle( motCle ); // dans la base, via le DAO
+				List<Ticket> mapRechercheTickets = ticketDao.rechercherTicketsMotCle( motCle ); // dans la base, via le DAO
+				session.setAttribute("MapRechercheTickets", mapRechercheTickets );
 				resultat = "Succès de la recherche par mot clé.";
 			} else {
 				resultat = "Echec de la recherche par mot clé.";
