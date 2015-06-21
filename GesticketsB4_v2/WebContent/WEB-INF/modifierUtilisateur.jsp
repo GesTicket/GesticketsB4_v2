@@ -16,7 +16,7 @@
      <!-- si un bean identifié par 'utilisateur' existe, la valeur de chacun de ses attributs -->
      <!-- est affichée dans les différents champs de saisie de la page -->
      <!-- chaque champ est suivi d'une zone d'affichage : erreur de saisie éventuelle -->
-     <!-- les messages d'erreur sont extraits de la MAP 'erreurs' du bean 'InscriptionForm' -->
+     <!-- les messages d'erreur sont extraits de la MAP 'erreurs' de 'ModificationUtilisateurForm' -->
      <!-- le résultat du traitement (succès ou échec) est extrait de l'attribut 'resultat' -->
     
         <fieldset>
@@ -61,22 +61,6 @@
 	            	value="<c:out value="${ utilisateur.login }"/>" size="20" maxlength="20" />
 	            </div>
 	            <span class="col-sm-5 erreur">${ form.erreurs['login'] }</span>
-            </div>
-			<div class="form-group form-group-sm">
-	            <label for="motdepasse" class="col-sm-2 control-label">Mot de passe <span class="requis">*</span></label>
-	            <div class="col-sm-5">
-	            <input type="password" id="motdepasse" name="motdepasse" class="form-control"
-	            	value="<c:out value="${ utilisateur.motDePasse }"/>" size="20" maxlength="20" />
-	            </div>
-	            <span class="col-sm-5 erreur">${ form.erreurs['motdepasse'] }</span>
-            </div>
-			<div class="form-group form-group-sm">
-	            <label for="confirmation" class="col-sm-2 control-label">Confirmation du mot de passe <span class="requis">*</span></label>
-	            <div class="col-sm-5">
-	            <input type="password" id="confirmation" name="confirmation" class="form-control"
-	            	value="<c:out value="${ utilisateur.motDePasse }"/>" size="20" maxlength="20" />
-	            </div>
-	            <span class="col-sm-5 erreur">${ form.erreurs['confirmation'] }</span>
             </div>
 			<div class="form-group form-group-sm">
 	            <label for="profil" class="col-sm-2 control-label">Profil <span class="requis">*</span></label>

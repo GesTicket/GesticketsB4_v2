@@ -3,13 +3,11 @@ package servlets;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import dao.DAOFactory;
 import dao.UtilisateurDao;
 import forms.ModificationUtilisateurForm;
@@ -49,7 +47,7 @@ public class ModificationUtilisateur extends HttpServlet {
 		} else {
 			// sinon utilisateur connu
 			System.out.println( "utilisateur OK" );
-	 		// intancie un bean Client et retourne sa référence en sortie
+	 		// intancie un bean Utilisateur et retourne sa référence en sortie
 	    	Utilisateur utilisateur = utilisateurDao.trouverUtilisateur( id );
 	        request.setAttribute(ATT_USER, utilisateur);
 		}
@@ -60,10 +58,10 @@ public class ModificationUtilisateur extends HttpServlet {
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
-		// instanciation d'un objet métier de validation des saisies du formulaire d'inscription
+		// instanciation d'un objet métier de validation des saisies du formulaire de modification
 		ModificationUtilisateurForm form = new ModificationUtilisateurForm( utilisateurDao );
 		
-		// traitement de la requête POST par la méthode inscrireUtilisateur de l'objet métier
+		// traitement de la requête POST par la méthode modifierUtilisateur de l'objet métier
 		// et récupération au retour du bean Utilisateur créé
 		Utilisateur utilisateur = form.modifierUtilisateur( request );
 		

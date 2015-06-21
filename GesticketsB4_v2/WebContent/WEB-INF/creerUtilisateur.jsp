@@ -16,7 +16,7 @@
      <!-- si un bean identifié par 'utilisateur' existe, la valeur de chacun de ses attributs -->
      <!-- est affichée dans les différents champs de saisie de la page -->
      <!-- chaque champ est suivi d'une zone d'affichage : erreur de saisie éventuelle -->
-     <!-- les messages d'erreur sont extraits de la MAP 'erreurs' du bean 'InscriptionForm' -->
+     <!-- les messages d'erreur sont extraits de la MAP 'erreurs' de 'CreationUtilisateurForm' -->
      <!-- le résultat du traitement (succès ou échec) est extrait de l'attribut 'resultat' -->
     
         <fieldset>

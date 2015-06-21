@@ -13,7 +13,7 @@
 <body>
     <div id="corps">
     <c:choose>
-        <%-- si aucun utilisateurn'existe en session, message par défaut --%>
+        <%-- si aucun utilisateur n'existe en session, message par défaut --%>
         <c:when test="${ empty sessionScope.mapUtilisateurs }">
             <p class="erreur">Aucun utilisateur enregistré.</p>
         </c:when>
@@ -28,13 +28,13 @@
                 <th>prénom</th>
                 <th>profil</th>
                 <th>Date inscription</th>
-                <th class="action">Action</th>
+                <th>Action</th>
             </tr>
-            <%-- parcours de la MAP des utilisateurs en session et  utilisation de l'objet varStatus. --%>
+            <%-- parcours de la MAP des utilisateurs en session et utilisation de l'objet varStatus. --%>
             <c:forEach items="${ sessionScope.mapUtilisateurs }" var="mapUtilisateurs" varStatus="boucle">
                 <%-- Simple test de parité sur l'index de parcours, pour alterner la couleur de fond de chaque ligne du tableau. --%>
                  <tr class="${boucle.index % 2 == 0 ? 'active' : ''}">
-                    <%-- Affichage des propriétés du bean Client, qui est stocké en tant que valeur de l'entrée courante de la map --%>
+                    <%-- Affichage des propriétés du bean mapUtilisateurs, qui est stocké en tant que valeur de l'entrée courante de la map --%>
                     <td><c:out value="${ mapUtilisateurs.value.id }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.email }"/></td>
                     <td><c:out value="${ mapUtilisateurs.value.login }"/></td>

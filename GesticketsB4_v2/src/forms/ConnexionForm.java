@@ -86,7 +86,7 @@ public final class ConnexionForm {
 							} else {
 								// sinon login connu
 								System.out.println( "login OK" );
-						 		// intancie un bean Client et retourne sa référence en sortie
+						 		// intancie un bean Utilisateur et retourne sa référence en sortie
 						    	Utilisateur utilisateur = utilisateurDao.trouverLogin( login );
 								// comparaison mot de passe saisi et mot de passe chiffré stocké dans la table
 								password_crypte = utilisateur.getMotDePasse();

@@ -2,27 +2,19 @@ package forms;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
-import org.jasypt.util.password.ConfigurablePasswordEncryptor;
-
 import dao.DAOException;
 import dao.UtilisateurDao;
 import beans.Utilisateur;
 
 public class ModificationUtilisateurForm {
-	// classe métier qui traite les saisies du formulaire d'inscription
-	
-	private final static String ALGO_CHIFFREMENT = "SHA-256";
+	// classe métier qui traite les saisies du formulaire de modification d'un utilisateur
 	
     private static final String CHAMP_ID     = "id";
     private static final String CHAMP_NOM    = "nom";
     private static final String CHAMP_PRENOM = "prenom";
     private static final String CHAMP_EMAIL  = "email";
     private static final String CHAMP_LOGIN  = "login";
-    private static final String CHAMP_PASS   = "motdepasse";
-    private static final String CHAMP_CONF   = "confirmation";
     private static final String CHAMP_PROFIL = "profil";
 
     // le bean qui va être créé si tout est correct
@@ -61,7 +53,6 @@ public class ModificationUtilisateurForm {
 		validerPrenom( getValeurChamp( request, CHAMP_PRENOM ) );
 		validerEmail( getValeurChamp( request, CHAMP_EMAIL ) );
 		validerLogin( getValeurChamp (request, CHAMP_LOGIN ) );
-		validerMotDePasse( getValeurChamp( request, CHAMP_PASS ), getValeurChamp( request, CHAMP_CONF ) );
 		validerProfil( getValeurChamp (request, CHAMP_PROFIL ) );
 		
 		try { // l'accès en BD peut générer des erreurs SQL
@@ -150,34 +141,6 @@ public class ModificationUtilisateurForm {
 		}
 	}
 	
-	private void validerMotDePasse( String motdepasse, String confirmation ) {
-	   if ( motdepasse != null && confirmation != null ) { // paramètres non vides
-		   utilisateur.setMotDePasse( confirmation );
-		   if ( motdepasse.equals( confirmation ) ) {
-			if ( motdepasse.length() >=3 ) { // mdp confirmé et + de 3 carcactères : OK
-				// chiffrement du mdp avec la librairie Jasypt
-				// fichier JAR dans WEB-INF\lib
-				// algo SHA-256, retourne une chaîne de 56 caractères en Base64
-				ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
-				passwordEncryptor.setAlgorithm( ALGO_CHIFFREMENT );
-				passwordEncryptor.setPlainDigest(false);
-				String motDePasseChiffre = passwordEncryptor.encryptPassword( motdepasse );
-				utilisateur.setMotDePasse( motDePasseChiffre );
-				System.out.println( "MDP chiffré : " + motDePasseChiffre );
-			} else { // mdp trop court
-				erreurs.put( "motdepasse", "Le mdp doit avoir au moins 3 caractères." );
-				System.out.println( "MDP trop court" );
-			}
-		   } else { // pas confirmé
-				erreurs.put( "confirmation", "Le mot de passe et la confirmation doivent être identiques." );
-				System.out.println( "Confirmation différente de MDP" );
-		   }
-	   } else { // mdp non fourni
-		   erreurs.put( "motdepasse", "Le mdp et sa confirmation sont obligatoires." );
-		   System.out.println( "MDP non fourni" );
-	   }
-	}
-
 	private void validerProfil( String profil ) {
 		if ( profil != null ) { // paramètre non vide
 			utilisateur.setProfil( profil );

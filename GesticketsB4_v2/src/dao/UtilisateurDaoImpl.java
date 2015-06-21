@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import beans.Utilisateur;
 
 public class UtilisateurDaoImpl implements UtilisateurDao {
@@ -18,7 +17,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 	private static final String SQL_SELECT           = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur ORDER BY id";
 	private static final String SQL_SELECT_PAR_ID    = "SELECT id, nom, prenom, email, login, mot_de_passe, date_inscription, profil FROM Utilisateur WHERE id = ?";
 	private static final String SQL_INSERT           = "INSERT INTO Utilisateur (nom, prenom, email, login, mot_de_passe, date_inscription, profil) VALUES (?, ?, ?, ?, ?, NOW(), ?)";
-	private static final String SQL_UPDATE_PAR_ID    = "UPDATE Utilisateur set nom=?, prenom=?, email=?, login=?, mot_de_passe=?, profil=? WHERE id = ?";
+	private static final String SQL_UPDATE_PAR_ID    = "UPDATE Utilisateur set nom=?, prenom=?, email=?, login=?, profil=? WHERE id = ?";
 	private static final String SQL_DELETE_PAR_ID    = "DELETE FROM Utilisateur WHERE id = ?";
 	// scope SESSION
 	public static final String ATT_SESSION_USER      = "sessionUtilisateur";
@@ -148,7 +147,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             // préparation de la requête INSERT
             preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_PAR_ID, true, 
             		utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(), 
-            		utilisateur.getLogin(), utilisateur.getMotDePasse(), utilisateur.getProfil(), utilisateur.getId() );
+            		utilisateur.getLogin(), utilisateur.getProfil(), utilisateur.getId() );
             System.out.println( "initialisation requête 'modifier(utilisateur)'" );
             // exécution de l'insertion
             int statut = preparedStatement.executeUpdate();
@@ -210,10 +209,10 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             connexion = daoFactory.getConnection();
             // préparation de la requête DELETE
             preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_PAR_ID, true, utilisateur.getId() );
-			System.out.println( "initialisation requête 'SupprimerUtilisateur()'" );
+			System.out.println( "initialisation requête 'supprimer(Utilisateur)'" );
             // exécution de la requête DELETE
             int statut = preparedStatement.executeUpdate();
-			System.out.println( "execution requête 'SupprimerUtilisateur()'" );
+			System.out.println( "execution requête 'supprimer(Utilisateur)'" );
             if ( statut == 0 ) {
                 throw new DAOException( "Échec de la suppression de l'utilisateur, aucune ligne supprimée de la table." );
             } else {
@@ -226,9 +225,8 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         }
 	}
 
-    // Méthode générique utilisée pour retourner un utilisateur depuis la base de
-    // données, correspondant à la requête SQL donnée prenant en paramètres les
-    // objets passés en argument.
+    // Méthode générique utilisée pour retourner un utilisateur depuis la base de données,
+    // correspondant à la requête SQL donnée prenant en paramètres les objets passés en argument.
     
     private Utilisateur trouver( String sql, Object... objets ) throws DAOException {
         Connection connexion = null;
@@ -239,10 +237,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = daoFactory.getConnection();
-            /*
-             * Préparation de la requête avec les objets passés en arguments
-             * (ici, uniquement un id) et exécution.
-             */
+            /* Préparation de la requête avec les objets passés en arguments (ici, uniquement un id) et exécution. */
             preparedStatement = initialisationRequetePreparee( connexion, sql, false, objets );
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données retournée dans le ResultSet */

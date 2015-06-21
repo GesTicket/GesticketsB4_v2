@@ -3,13 +3,11 @@ package servlets;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import dao.DAOFactory;
 import dao.UtilisateurDao;
 import forms.CreationUtilisateurForm;
@@ -41,7 +39,7 @@ public class CreationUtilisateur extends HttpServlet {
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 				
-		// instanciation d'un objet métier de validation des saisies du formulaire d'inscription
+		// instanciation d'un objet métier de validation des saisies du formulaire de création
 		CreationUtilisateurForm form = new CreationUtilisateurForm( utilisateurDao );
 		
 		// traitement de la requête POST par la méthode creerUtilisateur de l'objet métier

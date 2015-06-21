@@ -28,7 +28,7 @@ public class Connexion extends HttpServlet {
 
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-    	// requête POST : validation des saisies, création du bean Connecté et de la MAP Erreurs
+    	// requête POST : validation des saisies, création de la MAP Erreurs et utilisation de variables de session
 
 		// Récupération de la fabrique dans la portée application
     	DAOFactory daoFactory = (DAOFactory) getServletContext().getAttribute( ATT_DAO_FACTORY_ID );

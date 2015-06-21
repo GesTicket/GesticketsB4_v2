@@ -2,18 +2,14 @@ package forms;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
-
 import dao.DAOException;
 import dao.UtilisateurDao;
-
 import beans.Utilisateur;
 
 public class CreationUtilisateurForm {
-	// classe métier qui traite les saisies du formulaire d'inscription
+	// classe métier qui traite les saisies du formulaire de création d'un utilisateur
 	
 	private final static String ALGO_CHIFFREMENT = "SHA-256";
 	

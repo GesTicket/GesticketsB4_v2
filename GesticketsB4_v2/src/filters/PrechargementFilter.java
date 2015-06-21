@@ -15,25 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import beans.Utilisateur;
+import beans.Ticket;
 import dao.UtilisateurDao;
 import dao.DAOFactory;
 import dao.TicketDao;
-import beans.Ticket;
 
 public class PrechargementFilter implements Filter {
 	private static final String ATT_DAO_FACTORY_ID        = "daoFactory";
     public static final String ATT_SESSION_UTILISATEURS   = "mapUtilisateurs";
-    public static final String ATT_SESSION_TICKETS = "mapTickets";
+    public static final String ATT_SESSION_TICKETS        = "mapTickets";
 
     private UtilisateurDao utilisateurDao;
 
     private TicketDao ticketDao;
 
     public void init( FilterConfig config ) throws ServletException {
-        // Récupération d'une instance de notre DAO Utilisateur /* et du DAO Ticket
+        // Récupération d'une instance du DAO Utilisateur et du DAO Ticket
         this.utilisateurDao = ( (DAOFactory) config.getServletContext().getAttribute( ATT_DAO_FACTORY_ID ) ).getUtilisateurDao();
-        
-        this.ticketDao = ((DAOFactory) config.getServletContext().getAttribute(ATT_DAO_FACTORY_ID) ).getTicketDao();
+        this.ticketDao      = ( (DAOFactory) config.getServletContext().getAttribute( ATT_DAO_FACTORY_ID ) ).getTicketDao();
     }
 
     public void doFilter( ServletRequest req, ServletResponse res, FilterChain chain ) throws IOException,
@@ -61,6 +60,11 @@ public class PrechargementFilter implements Filter {
             session.setAttribute( ATT_SESSION_UTILISATEURS, mapUtilisateurs );
         }
 
+        /*
+         * Si la map des tickets n'existe pas en session, alors l'utilisateur se
+         * connecte pour la première fois et nous devons précharger en session
+         * les infos contenues dans la BDD.
+         */
         if ( session.getAttribute( ATT_SESSION_TICKETS ) == null ) {
 
             List<Ticket> listeTickets = ticketDao.listerTickets();

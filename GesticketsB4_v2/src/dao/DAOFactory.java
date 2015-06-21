@@ -24,7 +24,8 @@ public class DAOFactory {
 
 	// instance unique de l'objet DAO de la table Utilisateur de la base (singleton)
 	private UtilisateurDao utilisateurDAO;
-	
+
+	// instance unique de l'objet DAO de la table Ticket de la base (singleton)
 	private TicketDao ticketDao;
 	
 	// constructeur privé de la fabrique => la fabrique respecte une part du Design Pattern Singleton
@@ -102,7 +103,9 @@ public class DAOFactory {
 		}
 		return utilisateurDAO;
 	}
-	
+
+	// méthode publique fournissant une instance unique de DAO pour la table Ticket
+	// => l'objet DAO fourni est un singleton
 	public TicketDao getTicketDao() {
 		if (ticketDao == null ) {
 			System.out.println("instanciation du DAO table Ticket");
@@ -110,10 +113,5 @@ public class DAOFactory {
 		}
 		return ticketDao;
 	}
-	
-	// méthodes fournissant une instance de DAO pour les autres tables
- // une véritable fabrique de DAOs devrait disposer d'un type abstrait DAO<T> qui définit des
-	// méthodes CRUD abstraites, dérivé dans les classes DAO spécifiques de l'accès à chaque table
-// ...
 
 }
